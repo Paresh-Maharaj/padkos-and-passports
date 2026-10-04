@@ -6,13 +6,13 @@ description: "A family getaway in the southern bergs in tranquil self catering
 date: 2026-06-26
 updated: 2026-06-29
 cover: ../../assets/uploads/20260627_135220-1-.jpg
-coverAlt: Green foothills below blue Drakensberg peaks (sample image)
+coverAlt: "Picture from the cave "
 country: South Africa
 region: south-africa
 tripType: family
 tags:
   - Drakensberg
-  - with kids
+  - with extended family
   - KwaZulu-Natal
 featured: false
 sponsored: false
