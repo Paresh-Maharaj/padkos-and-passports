@@ -1,16 +1,20 @@
 ---
-title: "Three grandkids, one minibus and the Drakensberg"
-description: "A family week in the Champagne Valley: hikes small legs can manage, rainy-day rescues and the self-catering trick that saved our budget."
+title: Eland Valley with the Family
+description: "A family week in the Champagne Valley: hikes small legs can
+  manage, rainy-day rescues and the self-catering trick that saved our budget."
 date: 2026-08-20
 cover: ../../assets/uploads/sample-drakensberg.jpg
-coverAlt: "Green foothills below blue Drakensberg peaks (sample image)"
+coverAlt: Green foothills below blue Drakensberg peaks (sample image)
 country: South Africa
 region: south-africa
 tripType: family
-tags: [Drakensberg, with kids, KwaZulu-Natal]
+tags:
+  - Drakensberg
+  - with kids
+  - KwaZulu-Natal
 featured: false
-draft: false
 sponsored: false
+draft: false
 ---
 
 > **Sample story.** Replace or delete in the editor.
