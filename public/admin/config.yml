@@ -4,9 +4,9 @@
 # ─────────────────────────────────────────────────────────────
 backend:
   name: github
-  repo: YOUR-GITHUB-USERNAME/padkos-and-passports   # ✏️ your GitHub username / repository name
+  repo: Paresh-Maharaj/padkos-and-passports   # ✏️ your GitHub username / repository name
   branch: main
-  base_url: https://padkosandpassports.pages.dev    # ✏️ your site's web address (no slash at the end)
+  base_url: https://padkos-and-passports.pages.dev    # ✏️ your site's web address (no slash at the end)
   auth_endpoint: api/auth
   commit_messages:
     create: 'New {{collection}}: {{slug}}'
@@ -21,8 +21,8 @@ publish_mode: editorial_workflow
 # Lets the editor run on your own computer too (optional, for helpers).
 local_backend: true
 
-site_url: https://padkosandpassports.pages.dev       # ✏️ your site address again
-display_url: https://padkosandpassports.pages.dev    # ✏️ and once more
+site_url: https://padkos-and-passports.pages.dev       # ✏️ your site address again
+display_url: https://padkos-and-passports.pages.dev    # ✏️ and once more
 logo_url: /favicon.svg
 
 media_folder: src/assets/uploads
