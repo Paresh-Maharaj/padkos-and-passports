@@ -1,0 +1,6 @@
+---
+interface Props { href?: string; variant?: string }
+const { href, variant } = Astro.props;
+const cls = ['tag', variant && `tag--${variant}`].filter(Boolean).join(' ');
+---
+{href ? <a class={cls} href={href}><slot /></a> : <span class={cls}><slot /></span>}

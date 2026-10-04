@@ -1,0 +1,7 @@
+/* Makes the editor's live preview look like the real blog. */
+body { background: #faf6ef; color: #2a211a; font: 400 18px/30px 'Atkinson Hyperlegible', system-ui, sans-serif; padding: 24px; max-width: 68ch; margin: 0 auto; }
+h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; line-height: 1.2; }
+a { color: #a94e18; }
+img { max-width: 100%; height: auto; border-radius: 10px; }
+blockquote { margin: 0; padding-left: 24px; border-left: 3px solid #e0a526; font-style: italic; }
+table { border-collapse: collapse; width: 100%; } th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #ddd2c1; }

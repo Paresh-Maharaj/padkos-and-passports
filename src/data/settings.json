@@ -1,0 +1,50 @@
+{
+  "siteTitle": "Padkos & Passports",
+  "tagline": "Slow roads and open skies — solo or with the whole family, from the Karoo to Kyoto.",
+  "siteUrl": "https://padkosandpassports.pages.dev",
+  "language": "en-ZA",
+  "author": {
+    "name": "Your Name",
+    "shortBio": "Retired, restless and South African. I travel solo when the road calls and with the grandchildren when the holidays do — and I write it all down so you can go too.",
+    "location": "KwaZulu-Natal, South Africa",
+    "email": "hello@example.com"
+  },
+  "social": {
+    "instagram": "",
+    "facebook": "",
+    "youtube": "",
+    "pinterest": "",
+    "tiktok": ""
+  },
+  "newsletter": {
+    "enabled": true,
+    "heading": "Postcards from the road",
+    "blurb": "One honest letter a month: where I went, what it cost, and the padkos worth packing. No spam, unsubscribe any time.",
+    "formAction": "",
+    "emailFieldName": "email_address",
+    "buttonLabel": "Send me the postcards"
+  },
+  "sponsor": {
+    "enabled": false,
+    "label": "This month's travel partner",
+    "name": "",
+    "message": "",
+    "url": "",
+    "buttonLabel": "Find out more"
+  },
+  "mediaKit": {
+    "monthlyReaders": "2,400",
+    "newsletterSubscribers": "650",
+    "socialFollowers": "3,100",
+    "audience": "Mostly South Africans aged 45–75 who plan, save for and take two or three trips a year — split between road trips at home and one bigger overseas journey.",
+    "offers": [
+      "Sponsored trip write-ups (always clearly labelled)",
+      "Destination and accommodation reviews",
+      "Newsletter feature in 'Postcards from the road'",
+      "Monthly travel-partner banner on every article"
+    ]
+  },
+  "analytics": {
+    "cloudflareBeaconToken": ""
+  }
+}

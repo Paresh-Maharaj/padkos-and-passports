@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getPosts, REGIONS, slugify } from '../../lib/posts';
+
+const posts = await getPosts();
+const byRegion = Object.entries(REGIONS).map(([key, label]) => {
+  const countries = new Map<string, number>();
+  posts.filter((p) => p.data.region === key).forEach((p) => countries.set(p.data.country, (countries.get(p.data.country) ?? 0) + 1));
+  return { key, label, countries: [...countries.entries()].sort((a, b) => a[0].localeCompare(b[0])) };
+});
+---
+
+<Base title="Destinations" description="Browse every trip by country — South Africa, the rest of Africa and the wider world.">
+  <section class="container section">
+    <p class="eyebrow">Browse by place</p>
+    <h1>Destinations</h1>
+  </section>
+  {byRegion.map((r) => (
+    <section class="container section" id={r.key} style="padding-top:0">
+      <div class="section-head"><h2>{r.label}</h2></div>
+      {r.countries.length ? (
+        <ul class="country-list">
+          {r.countries.map(([c, n]) => (
+            <li><a href={`/destinations/${slugify(c)}/`}>{c} <span>{n}</span></a></li>
+          ))}
+        </ul>
+      ) : <p class="lede">Stories coming soon.</p>}
+    </section>
+  ))}
+</Base>

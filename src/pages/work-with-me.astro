@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import settings from '../data/settings.json';
+const m = settings.mediaKit;
+---
+<Base title="Work with me" description={`Sponsorships, partnerships and press for ${settings.siteTitle}: audience, numbers and what I offer.`}>
+  <section class="narrow article-head">
+    <p class="eyebrow">Brands, tourism boards &amp; press</p>
+    <h1>Work with me</h1>
+    <p class="lede" style="margin-top:16px">I partner with places and products my readers will love — and I always tell them when a story is sponsored.</p>
+  </section>
+
+  <section class="container section" style="padding-top:0">
+    <div class="stats">
+      <div class="stat"><span class="stat__value">{m.monthlyReaders}</span><span class="stat__label">readers a month</span></div>
+      <div class="stat"><span class="stat__value">{m.newsletterSubscribers}</span><span class="stat__label">newsletter subscribers</span></div>
+      <div class="stat"><span class="stat__value">{m.socialFollowers}</span><span class="stat__label">social followers</span></div>
+    </div>
+  </section>
+
+  <div class="narrow prose">
+    <h2>Who reads this blog</h2>
+    <p>{m.audience}</p>
+    <h2>Ways we can work together</h2>
+    <ul>{m.offers.map((o) => <li>{o}</li>)}</ul>
+    <h2>My promise to readers</h2>
+    <p>Every sponsored story is labelled at the top. I only accept partnerships I'd recommend to a friend, and I keep editorial control. Read the full <a href="/disclosure/">disclosure policy</a>.</p>
+    <p><a class="btn btn--primary" href={`mailto:${settings.author.email}?subject=Partnership%20enquiry`}>Email me about a partnership</a></p>
+  </div>
+</Base>

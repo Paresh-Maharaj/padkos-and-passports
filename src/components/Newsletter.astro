@@ -1,0 +1,23 @@
+---
+// Sign-up box. Paste your newsletter provider's form address into
+// "Site settings → Newsletter → Form action" (MailerLite, Kit, Buttondown…).
+import settings from '../data/settings.json';
+const n = settings.newsletter;
+const ready = Boolean(n.formAction);
+---
+{n.enabled && (
+  <section class="newsletter" aria-labelledby="nl-heading">
+    <h2 class="newsletter__heading" id="nl-heading">{n.heading}</h2>
+    <p class="newsletter__blurb">{n.blurb}</p>
+    {ready ? (
+      <form class="newsletter__form" action={n.formAction} method="post" target="_blank">
+        <label for="nl-email">Your email address</label>
+        <input class="field" id="nl-email" type="email" name={n.emailFieldName} autocomplete="email" required placeholder="you@example.com" />
+        <button class="btn btn--primary" type="submit">{n.buttonLabel}</button>
+      </form>
+    ) : (
+      <p class="newsletter__fine">The sign-up form appears here once a newsletter address is added in Site settings. Until then, readers can <a href={`mailto:${settings.author.email}?subject=Add%20me%20to%20the%20newsletter`}>email to join</a>.</p>
+    )}
+    <p class="newsletter__fine">I'll only use your address to send the newsletter. <a href="/disclosure/#privacy">Privacy</a>.</p>
+  </section>
+)}

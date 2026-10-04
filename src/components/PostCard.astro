@@ -1,0 +1,25 @@
+---
+import { Image } from 'astro:assets';
+import Tag from './Tag.astro';
+import { formatDate, readingTime, REGIONS, TRIP_TYPES, type Post } from '../lib/posts';
+interface Props { post: Post; feature?: boolean; eager?: boolean }
+const { post, feature = false, eager = false } = Astro.props;
+const d = post.data;
+const Heading = feature ? 'h2' : 'h3';
+---
+
+<article class:list={['post-card', { 'post-card--feature': feature }]}>
+  <div class="post-card__media">
+    <Image src={d.cover} alt={d.coverAlt} widths={[400, 700, 1000]} sizes={feature ? '(max-width: 760px) 100vw, 680px' : '(max-width: 700px) 100vw, 380px'} loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : 'auto'} />
+  </div>
+  <div class="post-card__body">
+    <div class="tag-row">
+      <Tag href={`/trips/${d.tripType}/`} variant={d.tripType}>{TRIP_TYPES[d.tripType].replace(' travel', '')}</Tag>
+      <Tag variant={d.region}>{d.country}</Tag>
+      {d.sponsored && <Tag variant="sponsored">Sponsored</Tag>}
+    </div>
+    <Heading class="post-card__title"><a href={`/blog/${post.id}/`}>{d.title}</a></Heading>
+    <p class="post-card__excerpt">{d.description}</p>
+    <p class="post-card__meta"><time datetime={d.date.toISOString()}>{formatDate(d.date)}</time> · {readingTime(post.body)} min read</p>
+  </div>
+</article>

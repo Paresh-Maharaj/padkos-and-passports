@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import Newsletter from '../components/Newsletter.astro';
+import settings from '../data/settings.json';
+import { Content, frontmatter } from '../content/pages/about.md';
+
+const jsonLd = [{
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  mainEntity: { '@type': 'Person', name: settings.author.name, description: settings.author.shortBio, homeLocation: settings.author.location,
+    sameAs: Object.values(settings.social).filter(Boolean) },
+}];
+---
+<Base title={frontmatter.title} description={frontmatter.description} jsonLd={jsonLd}>
+  <section class="narrow article-head">
+    <p class="eyebrow">{settings.author.location}</p>
+    <h1>{frontmatter.title}</h1>
+  </section>
+  <div class="narrow prose"><Content /></div>
+  <section class="container section"><Newsletter /></section>
+</Base>

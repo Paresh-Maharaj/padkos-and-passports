@@ -1,0 +1,91 @@
+/* Padkos & Passports — design tokens.
+   Mirrors the "Padkos & Passports" design system (tokens.json).
+   Light is the default; dark follows the reader's device or the toggle. */
+
+:root,
+[data-theme='light'] {
+  --surface-100: #faf6ef;   /* page background: sun-bleached paper */
+  --surface-200: #f2ebdf;   /* raised panels, sponsor + newsletter boxes */
+  --surface-300: #e8dfcf;   /* pressed / hover fills */
+  --ink: #2a211a;           /* body text */
+  --ink-muted: #665847;     /* meta, captions */
+  --rule: #ddd2c1;          /* hairlines, card borders */
+  --rule-strong: #8a7a66;   /* input borders (3:1) */
+  --ochre: #a94e18;         /* brand: Karoo earth — links, primary buttons */
+  --ochre-hover: #8c3f12;
+  --on-ochre: #ffffff;
+  --fynbos: #3a6449;        /* South Africa region, solo badge */
+  --on-fynbos: #ffffff;
+  --ocean: #1d5a73;         /* World region, focus ring */
+  --on-ocean: #ffffff;
+  --sunset: #e0a526;        /* highlight: decoration only, never text */
+  --focus: #1d5a73;
+  --shadow-card: 0 1px 2px rgba(42, 33, 26, 0.06), 0 8px 24px rgba(42, 33, 26, 0.08);
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --surface-100: #17130f;
+  --surface-200: #221c17;
+  --surface-300: #2e2620;
+  --ink: #f2ebe1;
+  --ink-muted: #bcae9d;
+  --rule: #3b322a;
+  --rule-strong: #8a7a66;
+  --ochre: #e88d55;
+  --ochre-hover: #f2a676;
+  --on-ochre: #1a120c;
+  --fynbos: #8fc4a2;
+  --on-fynbos: #10170f;
+  --ocean: #82c2db;
+  --on-ocean: #0c1820;
+  --sunset: #e9b949;
+  --focus: #82c2db;
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35);
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --surface-100: #17130f;
+    --surface-200: #221c17;
+    --surface-300: #2e2620;
+    --ink: #f2ebe1;
+    --ink-muted: #bcae9d;
+    --rule: #3b322a;
+    --rule-strong: #8a7a66;
+    --ochre: #e88d55;
+    --ochre-hover: #f2a676;
+    --on-ochre: #1a120c;
+    --fynbos: #8fc4a2;
+    --on-fynbos: #10170f;
+    --ocean: #82c2db;
+    --on-ocean: #0c1820;
+    --sunset: #e9b949;
+    --focus: #82c2db;
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35);
+    color-scheme: dark;
+  }
+}
+
+:root {
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Atkinson Hyperlegible', 'Segoe UI', system-ui, sans-serif;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 72px;
+
+  --radius-sm: 4px;
+  --radius-md: 10px;
+  --radius-lg: 18px;
+  --radius-pill: 999px;
+
+  --measure: 68ch;     /* comfortable reading line length */
+  --page-max: 1180px;
+}

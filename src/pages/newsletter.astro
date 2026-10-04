@@ -1,0 +1,8 @@
+---
+import Base from '../layouts/Base.astro';
+import Newsletter from '../components/Newsletter.astro';
+import settings from '../data/settings.json';
+---
+<Base title={settings.newsletter.heading} description={settings.newsletter.blurb}>
+  <section class="narrow section"><Newsletter /></section>
+</Base>

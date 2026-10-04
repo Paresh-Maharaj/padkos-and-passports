@@ -1,0 +1,158 @@
+# ─────────────────────────────────────────────────────────────
+#  Padkos & Passports — editor settings (Decap CMS)
+#  You only need to change the FOUR lines marked ✏️ during setup.
+# ─────────────────────────────────────────────────────────────
+backend:
+  name: github
+  repo: YOUR-GITHUB-USERNAME/padkos-and-passports   # ✏️ your GitHub username / repository name
+  branch: main
+  base_url: https://padkosandpassports.pages.dev    # ✏️ your site's web address (no slash at the end)
+  auth_endpoint: api/auth
+  commit_messages:
+    create: 'New {{collection}}: {{slug}}'
+    update: 'Update {{collection}}: {{slug}}'
+    delete: 'Delete {{collection}}: {{slug}}'
+    uploadMedia: 'Upload photo {{path}}'
+    deleteMedia: 'Delete photo {{path}}'
+
+# Lets you save drafts and preview them before they go live.
+publish_mode: editorial_workflow
+
+# Lets the editor run on your own computer too (optional, for helpers).
+local_backend: true
+
+site_url: https://padkosandpassports.pages.dev       # ✏️ your site address again
+display_url: https://padkosandpassports.pages.dev    # ✏️ and once more
+logo_url: /favicon.svg
+
+media_folder: src/assets/uploads
+public_folder: ../../assets/uploads
+
+collections:
+  # ───────────── Stories ─────────────
+  - name: posts
+    label: Stories
+    label_singular: Story
+    description: Your travel stories. Click "New Story" to write one.
+    folder: src/content/posts
+    create: true
+    slug: '{{slug}}'
+    media_folder: ../../assets/uploads
+    public_folder: ../../assets/uploads
+    sortable_fields: ['date', 'title', 'country']
+    summary: '{{title}} — {{country}} ({{date}})'
+    view_filters:
+      - { label: 'Solo trips', field: tripType, pattern: solo }
+      - { label: 'Family trips', field: tripType, pattern: family }
+      - { label: 'Sponsored', field: sponsored, pattern: true }
+    fields:
+      - { label: Title, name: title, widget: string, hint: 'Keep it under about 70 characters so it fits in Google results.' }
+      - { label: Short summary, name: description, widget: text, hint: 'One or two sentences (under 200 characters). Shown on cards, in Google and when shared on WhatsApp.' }
+      - { label: Date, name: date, widget: datetime, format: 'YYYY-MM-DD', date_format: 'D MMMM YYYY', time_format: false, picker_utc: true }
+      - { label: Updated on, name: updated, widget: datetime, format: 'YYYY-MM-DD', date_format: 'D MMMM YYYY', time_format: false, picker_utc: true, required: false, hint: 'Only fill this in if you revise an older story.' }
+      - { label: Cover photo, name: cover, widget: image, hint: 'Landscape photos work best. Any size is fine — the site shrinks them automatically.' }
+      - { label: Describe the cover photo, name: coverAlt, widget: string, hint: 'What is in the photo? e.g. "Sunset over the Swartberg Pass". Helps blind readers and Google.' }
+      - { label: Country, name: country, widget: string, hint: 'e.g. South Africa, Namibia, Japan. Use the same spelling each time.' }
+      - label: Region
+        name: region
+        widget: select
+        options:
+          - { label: 'South Africa', value: south-africa }
+          - { label: 'Rest of Africa', value: africa }
+          - { label: 'The wider world', value: world }
+      - label: Trip style
+        name: tripType
+        widget: select
+        options:
+          - { label: 'Solo', value: solo }
+          - { label: 'Family', value: family }
+      - { label: Topics, name: tags, widget: list, required: false, default: [], hint: 'Comma-separated, e.g. road trip, budget, with kids' }
+      - { label: 'Feature on the homepage?', name: featured, widget: boolean, default: false, hint: 'The newest featured story is shown big at the top of the homepage.' }
+      - { label: 'Sponsored story?', name: sponsored, widget: boolean, default: false, hint: 'Switch on if any part of the trip was paid for by a partner. A clear note is added automatically.' }
+      - { label: Sponsor name, name: sponsorName, widget: string, required: false, hint: 'Only needed for sponsored stories.' }
+      - { label: Hide from the site, name: draft, widget: boolean, default: false, hint: 'Keeps a published story off the site without deleting it.' }
+      - { label: Story, name: body, widget: markdown, hint: 'Use the toolbar for headings, bold text, lists and photos.' }
+
+  # ───────────── Pages ─────────────
+  - name: pages
+    label: Pages
+    files:
+      - label: About me
+        name: about
+        file: src/content/pages/about.md
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: Short summary, name: description, widget: string }
+          - { label: Page text, name: body, widget: markdown }
+
+  # ───────────── Site settings ─────────────
+  - name: settings
+    label: Site settings
+    editor: { preview: false }
+    files:
+      - label: Site settings
+        name: site
+        file: src/data/settings.json
+        fields:
+          - { label: Blog name, name: siteTitle, widget: string }
+          - { label: Tagline, name: tagline, widget: string }
+          - { label: Web address, name: siteUrl, widget: string, hint: 'e.g. https://padkosandpassports.co.za — change this when you add your own domain.' }
+          - { label: Language code, name: language, widget: hidden, default: en-ZA }
+          - label: About you
+            name: author
+            widget: object
+            fields:
+              - { label: Your name, name: name, widget: string }
+              - { label: Short bio, name: shortBio, widget: text }
+              - { label: "Where you're based", name: location, widget: string }
+              - { label: Contact email, name: email, widget: string }
+          - label: Social media links
+            name: social
+            widget: object
+            collapsed: true
+            hint: 'Paste the full link to each profile. Leave blank to hide.'
+            fields:
+              - { label: Instagram, name: instagram, widget: string, required: false }
+              - { label: Facebook, name: facebook, widget: string, required: false }
+              - { label: YouTube, name: youtube, widget: string, required: false }
+              - { label: Pinterest, name: pinterest, widget: string, required: false }
+              - { label: TikTok, name: tiktok, widget: string, required: false }
+          - label: Newsletter
+            name: newsletter
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Show the sign-up box, name: enabled, widget: boolean }
+              - { label: Heading, name: heading, widget: string }
+              - { label: Blurb, name: blurb, widget: text }
+              - { label: Form action (from your newsletter provider), name: formAction, widget: string, required: false, hint: 'The web address your provider gives for an "HTML form" embed.' }
+              - { label: Email field name, name: emailFieldName, widget: string, hint: 'Also from the provider''s HTML form, e.g. email_address or fields[email].' }
+              - { label: Button text, name: buttonLabel, widget: string }
+          - label: Sponsor banner
+            name: sponsor
+            widget: object
+            collapsed: true
+            hint: 'A small, clearly labelled box at the end of every story.'
+            fields:
+              - { label: Show the sponsor banner, name: enabled, widget: boolean }
+              - { label: Label, name: label, widget: string }
+              - { label: Sponsor name, name: name, widget: string, required: false }
+              - { label: Message, name: message, widget: text, required: false }
+              - { label: Link, name: url, widget: string, required: false }
+              - { label: Button text, name: buttonLabel, widget: string }
+          - label: Media kit (Work with me page)
+            name: mediaKit
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Monthly readers, name: monthlyReaders, widget: string }
+              - { label: Newsletter subscribers, name: newsletterSubscribers, widget: string }
+              - { label: Social followers, name: socialFollowers, widget: string }
+              - { label: Who your readers are, name: audience, widget: text }
+              - { label: What you offer, name: offers, widget: list, field: { label: Offer, name: offer, widget: string } }
+          - label: Visitor statistics
+            name: analytics
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Cloudflare Web Analytics token, name: cloudflareBeaconToken, widget: string, required: false, hint: 'Optional. Leave blank if you turned on analytics in the Cloudflare Pages dashboard instead.' }

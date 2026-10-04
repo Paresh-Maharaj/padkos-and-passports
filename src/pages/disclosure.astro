@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import settings from '../data/settings.json';
+---
+<Base title="Affiliate links, sponsorship & privacy" description="How this blog earns its keep, how sponsored stories are labelled, and how your information is handled.">
+  <section class="narrow article-head"><h1>Affiliate links, sponsorship &amp; privacy</h1></section>
+  <div class="narrow prose">
+    <h2>Affiliate links</h2>
+    <p>Some links on this site are affiliate links. If you book or buy through one, I may earn a small commission at no extra cost to you. It helps keep the blog free and the tank full. I only link to things I've used or would happily use.</p>
+    <h2>Sponsored stories</h2>
+    <p>When a trip, stay or product was paid for or supported by a partner, the story is labelled <strong>Sponsored</strong> and says who the partner was. Sponsors never get to approve or edit what I write.</p>
+    <h2 id="privacy">Privacy</h2>
+    <p>This site does not use advertising cookies or track you across the web. Visitor numbers are counted with Cloudflare Web Analytics, which does not use cookies or collect personal information.</p>
+    <p>If you join the newsletter, your email address is stored by my newsletter provider and used only to send you the newsletter. You can unsubscribe with one click from any email. To have your details removed, email <a href={`mailto:${settings.author.email}`}>{settings.author.email}</a>. This is in line with South Africa's Protection of Personal Information Act (POPIA).</p>
+  </div>
+</Base>

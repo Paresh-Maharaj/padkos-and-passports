@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import PostCard from '../components/PostCard.astro';
+import Newsletter from '../components/Newsletter.astro';
+import { getPosts, REGIONS } from '../lib/posts';
+import settings from '../data/settings.json';
+
+const posts = await getPosts();
+const featured = posts.find((p) => p.data.featured) ?? posts[0];
+const latest = posts.filter((p) => p !== featured).slice(0, 6);
+const count = (r: string) => posts.filter((p) => p.data.region === r).length;
+const blurbs: Record<string, string> = {
+  'south-africa': 'Karoo dorps, Drakensberg passes and the long way round the coast.',
+  africa: 'Border crossings, bush camps and neighbours worth the drive.',
+  world: 'The bigger trips — planned for, saved for, and worth every rand.',
+};
+---
+
+<Base>
+  <section class="container hero">
+    <p class="eyebrow">A South African travel journal</p>
+    <h1>Pack the padkos. <em>Bring the passport.</em></h1>
+    <p class="lede">{settings.tagline} Honest stories, real costs in rand, and the little things that make a trip easier at any age.</p>
+    <div class="hero__actions">
+      <a class="btn btn--primary" href="/blog/">Read the latest stories</a>
+      <a class="btn btn--secondary" href="/newsletter/">Get the monthly postcard</a>
+    </div>
+  </section>
+
+  {featured && (
+    <section class="container" aria-label="Featured story">
+      <PostCard post={featured} feature eager />
+    </section>
+  )}
+
+  <section class="container section">
+    <div class="section-head">
+      <h2>Where to next?</h2>
+      <a href="/destinations/">All destinations →</a>
+    </div>
+    <div class="region-band">
+      {Object.entries(REGIONS).map(([key, label]) => (
+        <a class={`region-card region-card--${key}`} href={`/destinations/#${key}`}>
+          <strong>{label}</strong>
+          <span>{blurbs[key]}</span>
+          <span>{count(key)} {count(key) === 1 ? 'story' : 'stories'}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="container section">
+    <div class="section-head">
+      <h2>Latest from the road</h2>
+      <a href="/blog/">See every story →</a>
+    </div>
+    <div class="grid">
+      {latest.map((post) => <PostCard post={post} />)}
+    </div>
+  </section>
+
+  <section class="container">
+    <Newsletter />
+  </section>
+</Base>

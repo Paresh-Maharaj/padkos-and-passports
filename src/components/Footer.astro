@@ -1,0 +1,38 @@
+---
+import settings from '../data/settings.json';
+const year = new Date().getFullYear();
+const socials = Object.entries(settings.social).filter(([, url]) => url);
+const label = (k: string) => ({ instagram: 'Instagram', facebook: 'Facebook', youtube: 'YouTube', pinterest: 'Pinterest', tiktok: 'TikTok' })[k] ?? k;
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__grid">
+      <div class="stack">
+        <p><strong>{settings.siteTitle}</strong></p>
+        <p>{settings.author.shortBio}</p>
+      </div>
+      <div>
+        <h2>Explore</h2>
+        <ul>
+          <li><a href="/blog/">All stories</a></li>
+          <li><a href="/destinations/">Destinations</a></li>
+          <li><a href="/newsletter/">Newsletter</a></li>
+          <li><a href="/rss.xml">RSS feed</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Say hello</h2>
+        <ul>
+          <li><a href="/work-with-me/">Work with me</a></li>
+          <li><a href={`mailto:${settings.author.email}`}>Email</a></li>
+          {socials.map(([k, url]) => <li><a href={url} rel="me noopener" target="_blank">{label(k)}</a></li>)}
+        </ul>
+      </div>
+    </div>
+    <p class="site-footer__legal">
+      © {year} {settings.author.name}. Words and photos are my own unless credited.{' '}
+      <a href="/disclosure/">Affiliate links, sponsorship &amp; privacy</a>.
+    </p>
+  </div>
+</footer>

@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Search" description="Search every story on the blog." noindex>
+  <link slot="head" href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+  <section class="narrow section">
+    <h1>Search the stories</h1>
+    <p class="lede" style="margin:12px 0 24px">Try a place, a season or a word like “budget”.</p>
+    <div id="search"></div>
+  </section>
+  <script is:inline src="/pagefind/pagefind-ui.js"></script>
+  <script is:inline>
+    window.addEventListener('DOMContentLoaded', function () {
+      if (window.PagefindUI) new PagefindUI({ element: '#search', showImages: true, showSubResults: false, autofocus: true });
+      else document.getElementById('search').textContent = 'Search becomes available once the site is published.';
+    });
+  </script>
+  <style is:global>
+    #search { --pagefind-ui-primary: var(--ochre); --pagefind-ui-text: var(--ink); --pagefind-ui-background: var(--surface-100); --pagefind-ui-border: var(--rule-strong); --pagefind-ui-tag: var(--surface-200); --pagefind-ui-border-width: 2px; --pagefind-ui-border-radius: 10px; --pagefind-ui-font: var(--font-sans); --pagefind-ui-scale: 1; }
+  </style>
+</Base>

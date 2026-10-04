@@ -1,0 +1,148 @@
+/* Padkos & Passports — component styles.
+   The same file is the design system's components/bundle.css. */
+
+/* ---------- Type helpers ---------- */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+/* ---------- Button ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 48px;               /* big, easy tap target */
+  padding: 0 var(--space-5);
+  border: 2px solid transparent;
+  border-radius: var(--radius-pill);
+  font: 700 17px/1 var(--font-sans);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.btn--primary { background: var(--ochre); color: var(--on-ochre); }
+.btn--primary:hover { background: var(--ochre-hover); }
+.btn--secondary { background: transparent; color: var(--ink); border-color: var(--ink); }
+.btn--secondary:hover { background: var(--surface-300); }
+.btn--ghost { background: transparent; color: var(--ochre); padding: 0 var(--space-3); }
+.btn--ghost:hover { background: var(--surface-200); }
+.btn[disabled], .btn[aria-disabled='true'] { opacity: 0.5; cursor: not-allowed; }
+
+/* ---------- Tag ---------- */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--rule);
+  background: var(--surface-200);
+  color: var(--ink);
+  font: 700 14px/1 var(--font-sans);
+  text-decoration: none;
+  white-space: nowrap;
+}
+a.tag:hover { border-color: var(--ink-muted); }
+a.tag:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.tag--south-africa, .tag--solo { background: var(--fynbos); color: var(--on-fynbos); border-color: var(--fynbos); }
+.tag--world, .tag--family { background: var(--ocean); color: var(--on-ocean); border-color: var(--ocean); }
+.tag--africa { background: var(--ochre); color: var(--on-ochre); border-color: var(--ochre); }
+.tag--sponsored { background: var(--surface-100); color: var(--ink); border: 1px dashed var(--rule-strong); }
+.tag-row { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+
+/* ---------- Post card ---------- */
+.post-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-100);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.post-card:hover { box-shadow: var(--shadow-card); transform: translateY(-2px); }
+.post-card:focus-within { outline: 3px solid var(--focus); outline-offset: 3px; }
+.post-card__media { aspect-ratio: 3 / 2; overflow: hidden; background: var(--surface-300); }
+.post-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.post-card__body { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-5); flex: 1; }
+.post-card__title { font: 600 22px/30px var(--font-display); margin: 0; color: var(--ink); }
+.post-card__title a { color: inherit; text-decoration: none; }
+.post-card__title a::after { content: ''; position: absolute; inset: 0; } /* whole card clickable */
+.post-card { position: relative; }
+.post-card .tag-row { position: relative; z-index: 1; }
+.post-card__excerpt { margin: 0; color: var(--ink-muted); font: 400 16px/26px var(--font-sans); }
+.post-card__meta { margin-top: auto; color: var(--ink-muted); font: 400 14px/20px var(--font-sans); }
+.post-card--feature { display: grid; grid-template-columns: 1.3fr 1fr; }
+.post-card--feature .post-card__media { aspect-ratio: auto; min-height: 320px; }
+.post-card--feature .post-card__title { font-size: 30px; line-height: 36px; }
+@media (max-width: 760px) {
+  .post-card--feature { grid-template-columns: 1fr; }
+  .post-card--feature .post-card__media { aspect-ratio: 3 / 2; min-height: 0; }
+  .post-card--feature .post-card__title { font-size: 24px; line-height: 30px; }
+}
+
+/* ---------- Sponsor slot ---------- */
+.sponsor-slot {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border: 1px dashed var(--rule-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface-200);
+}
+.sponsor-slot__name { font: 600 22px/30px var(--font-display); margin: 0; color: var(--ink); }
+.sponsor-slot__message { margin: 0; color: var(--ink); font: 400 16px/26px var(--font-sans); }
+.sponsor-slot .btn { justify-self: start; }
+
+/* ---------- Disclosure note (sponsored posts) ---------- */
+.disclosure {
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-md);
+  background: var(--surface-200);
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  font: 400 16px/26px var(--font-sans);
+}
+.disclosure strong { font-weight: 700; }
+
+/* ---------- Newsletter box ---------- */
+.newsletter {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background: var(--surface-200);
+  border: 1px solid var(--rule);
+}
+.newsletter__heading { font: 600 30px/36px var(--font-display); margin: 0; color: var(--ink); }
+.newsletter__blurb { margin: 0; color: var(--ink-muted); font: 400 18px/30px var(--font-sans); max-width: 52ch; }
+.newsletter__form { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.newsletter__form label { flex-basis: 100%; font: 700 16px/20px var(--font-sans); color: var(--ink); }
+.field {
+  flex: 1 1 260px;
+  min-height: 48px;
+  padding: 0 var(--space-4);
+  border: 2px solid var(--rule-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-100);
+  color: var(--ink);
+  font: 400 18px/1 var(--font-sans);
+}
+.field:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-color: var(--focus); }
+.newsletter__fine { margin: 0; color: var(--ink-muted); font: 400 14px/20px var(--font-sans); }
+
+/* ---------- Stat (media kit) ---------- */
+.stat { display: grid; gap: var(--space-1); padding: var(--space-5); border-top: 3px solid var(--ochre); background: var(--surface-200); border-radius: 0 0 var(--radius-md) var(--radius-md); }
+.stat__value { font: 600 40px/46px var(--font-display); color: var(--ink); }
+.stat__label { font: 400 16px/24px var(--font-sans); color: var(--ink-muted); }
+
+/* Inline links inside components follow the brand link colour */
+.newsletter a:not(.btn), .disclosure a, .sponsor-slot a:not(.btn), .post-card__excerpt a { color: var(--ochre); text-underline-offset: 3px; }

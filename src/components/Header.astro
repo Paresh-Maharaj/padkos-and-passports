@@ -1,0 +1,56 @@
+---
+import settings from '../data/settings.json';
+const path = Astro.url.pathname;
+const links = [
+  { href: '/blog/', label: 'Stories' },
+  { href: '/destinations/', label: 'Destinations' },
+  { href: '/trips/solo/', label: 'Solo' },
+  { href: '/trips/family/', label: 'Family' },
+  { href: '/about/', label: 'About' },
+  { href: '/search/', label: 'Search' },
+];
+const [first, ...rest] = settings.siteTitle.split(' & ');
+---
+
+<a class="skip-link" href="#main">Skip to the story</a>
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href="/" aria-label={`${settings.siteTitle} — home`}>
+      {rest.length ? (<span>{first} <span class="brand__amp">&amp;</span> {rest.join(' & ')}</span>) : <span>{settings.siteTitle}</span>}
+    </a>
+    <nav class="nav" aria-label="Main">
+      {links.map((l) => (
+        <a href={l.href} aria-current={path.startsWith(l.href) ? 'page' : undefined}>{l.label}</a>
+      ))}
+    </nav>
+    <div class="reader-tools">
+      <button class="icon-btn" type="button" id="text-toggle" aria-pressed="false" title="Larger text"><span aria-hidden="true">A+</span><span class="visually-hidden">Larger text</span></button>
+      <button class="icon-btn" type="button" id="theme-toggle" aria-pressed="false" title="Dark mode"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span class="visually-hidden">Dark mode</span></button>
+    </div>
+  </div>
+</header>
+
+<script is:inline>
+  (function () {
+    var root = document.documentElement;
+    var textBtn = document.getElementById('text-toggle');
+    var themeBtn = document.getElementById('theme-toggle');
+    var isDark = function () {
+      return root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    };
+    var sync = function () {
+      textBtn.setAttribute('aria-pressed', String(root.dataset.text === 'large'));
+      themeBtn.setAttribute('aria-pressed', String(isDark()));
+    };
+    var save = function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} };
+    textBtn.addEventListener('click', function () {
+      root.dataset.text = root.dataset.text === 'large' ? 'normal' : 'large';
+      save('text', root.dataset.text); sync();
+    });
+    themeBtn.addEventListener('click', function () {
+      root.dataset.theme = isDark() ? 'light' : 'dark';
+      save('theme', root.dataset.theme); sync();
+    });
+    sync();
+  })();
+</script>

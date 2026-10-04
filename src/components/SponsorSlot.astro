@@ -1,0 +1,14 @@
+---
+// The monthly travel-partner box. Switch it on and fill it in under
+// "Site settings → Sponsor" in the editor. Hidden when switched off.
+import settings from '../data/settings.json';
+const s = settings.sponsor;
+---
+{s.enabled && s.name && (
+  <aside class="sponsor-slot" aria-label="Sponsor">
+    <p class="eyebrow">{s.label}</p>
+    <p class="sponsor-slot__name">{s.name}</p>
+    {s.message && <p class="sponsor-slot__message">{s.message}</p>}
+    {s.url && <a class="btn btn--secondary" href={s.url} rel="sponsored noopener" target="_blank">{s.buttonLabel}</a>}
+  </aside>
+)}

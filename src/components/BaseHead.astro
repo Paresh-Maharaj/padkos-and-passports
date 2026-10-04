@@ -1,0 +1,94 @@
+---
+// Everything search engines and social networks read about a page.
+import settings from '../data/settings.json';
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import defaultOg from '../assets/og-default.jpg';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: ImageMetadata;
+  imageAlt?: string;
+  type?: 'website' | 'article';
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown>[];
+}
+
+const {
+  title,
+  description = settings.tagline,
+  image = defaultOg,
+  imageAlt = settings.siteTitle,
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  noindex = false,
+  jsonLd = [],
+} = Astro.props;
+
+const fullTitle = title ? `${title} · ${settings.siteTitle}` : `${settings.siteTitle} — ${settings.tagline}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const og = await getImage({ src: image, width: 1200, height: 630, format: 'jpg', fit: 'cover' });
+const ogUrl = new URL(og.src, Astro.site);
+
+const siteLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: settings.siteTitle,
+  url: Astro.site?.href,
+  inLanguage: settings.language,
+  publisher: { '@type': 'Person', name: settings.author.name },
+};
+const beacon = settings.analytics.cloudflareBeaconToken;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex" />}
+<meta name="author" content={settings.author.name} />
+<meta name="generator" content={Astro.generator} />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="alternate" type="application/rss+xml" title={settings.siteTitle} href={new URL('rss.xml', Astro.site)} />
+<meta name="theme-color" content="#faf6ef" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#17130f" media="(prefers-color-scheme: dark)" />
+
+<!-- Open Graph / Facebook / WhatsApp -->
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={settings.siteTitle} />
+<meta property="og:locale" content={settings.language.replace('-', '_')} />
+<meta property="og:title" content={title ?? settings.siteTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={imageAlt} />
+{publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
+{modifiedTime && <meta property="article:modified_time" content={modifiedTime.toISOString()} />}
+
+<!-- X / Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title ?? settings.siteTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogUrl} />
+
+<script type="application/ld+json" set:html={JSON.stringify([siteLd, ...jsonLd])} />
+
+<!-- Remember the reader's colour + text-size choice before the page paints -->
+<script is:inline>
+  try {
+    var t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t;
+    var s = localStorage.getItem('text'); if (s) document.documentElement.dataset.text = s;
+  } catch (e) {}
+</script>
+
+{beacon && (
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: beacon })}></script>
+)}

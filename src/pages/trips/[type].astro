@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getPosts, TRIP_TYPES, type Post } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return (Object.keys(TRIP_TYPES) as (keyof typeof TRIP_TYPES)[]).map((type) => ({
+    params: { type },
+    props: { type, posts: posts.filter((p) => p.data.tripType === type) },
+  }));
+}
+interface Props { type: keyof typeof TRIP_TYPES; posts: Post[] }
+const { type, posts } = Astro.props;
+const intro = {
+  solo: 'Travelling alone after retirement: safety, single supplements, meeting people and the quiet joy of setting your own pace.',
+  family: 'Holidays with the children and grandchildren: kid-friendly stops, multi-generation stays and keeping everyone fed and happy.',
+}[type];
+---
+
+<Base title={TRIP_TYPES[type]} description={intro}>
+  <section class="container section">
+    <p class="eyebrow">Trip style</p>
+    <h1>{TRIP_TYPES[type]}</h1>
+    <p class="lede" style="margin-top:12px">{intro}</p>
+  </section>
+  <section class="container">
+    {posts.length ? <div class="grid">{posts.map((p) => <PostCard post={p} />)}</div> : <p class="lede">Stories coming soon.</p>}
+  </section>
+</Base>
