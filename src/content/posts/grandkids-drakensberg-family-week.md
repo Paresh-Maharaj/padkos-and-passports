@@ -1,8 +1,10 @@
 ---
 title: Eland Valley with the Family
-description: "A family week in the Champagne Valley: hikes small legs can
-  manage, rainy-day rescues and the self-catering trick that saved our budget."
-date: 2026-08-20
+description: "A family getaway in the southern bergs in tranquil self catering
+  log apartments.  At the resort we enjoyed the games room, canoeing, camp fires
+  and the short hikes around the dams. "
+date: 2026-06-26
+updated: 2026-06-29
 cover: ../../assets/uploads/sample-drakensberg.jpg
 coverAlt: Green foothills below blue Drakensberg peaks (sample image)
 country: South Africa
@@ -16,17 +18,16 @@ featured: false
 sponsored: false
 draft: false
 ---
-
 > **Sample story.** Replace or delete in the editor.
 
-Seven days, three grandchildren aged five to eleven, and a minibus that smelt faintly of naartjies by day two. Here's how we kept everyone happy.
+4 marvelous days in bitter cold mornings with family including my 80 year old mom.
 
-## Walks for little legs
+## Nearby hikes & attractions
 
-The short trail to the waterfall took us ninety minutes there and back, with plenty of stops for frogs. Start early before the afternoon thunderstorms roll in.
+A short drive away through the Gooderson resort provided us a 3 odd hour trail at Garden Castle managed by KZN Ezemvelo.  The scenic hike cost R80 pp with river crossings and waterfalls to an overnight cave is moderate to difficult but the youngsters did the hike in under 2 hours. Start early and get clear directions as the area is not clearly marked.
 
-## Rainy-day rescues
+## Nearby attractions 
 
-1. The chocolate factory down the road — worth the sugar rush.
-2. A bird-of-prey show the kids still talk about.
-3. A big puzzle and a pot of hot chocolate. Never underestimate it.
+1. Sani Pass that requires 4X4 and passports to access this mountain pass
+2. Horse and nature trails 
+3. just over half hour drive to the town of Underberg
