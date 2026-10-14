@@ -1,8 +1,8 @@
 ---
 title: Eland Valley with the Family
 description: "A family getaway in the southern bergs in tranquil self catering
-  log apartments.  At the resort we enjoyed the games room, canoeing, camp fires
-  and the short hikes around the dams. "
+  log apartments.  At the resort we enjoyed quality time in the games room,
+  canoeing, camp fires and the short hikes around the dams. "
 date: 2026-06-26
 updated: 2026-06-29
 cover: ../../assets/uploads/20260627_135220-1-.jpg
