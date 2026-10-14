@@ -7,7 +7,7 @@ description: A family journey from the 7th to the 10th of August 2026 to one of
   took us through the border posts of Zimbabwe, Zambia, Botswana, and Namibia.
 date: 2026-09-12
 cover: ../../assets/uploads/sample-karoo.jpg
-coverAlt: Late-afternoon light over layered Karoo hills (sample image)
+coverAlt: "Falls from Zimbabwe side "
 country: South Africa
 region: south-africa
 tripType: solo
