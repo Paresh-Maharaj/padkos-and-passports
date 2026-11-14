@@ -66,6 +66,7 @@ collections:
         options:
           - { label: 'Solo', value: solo }
           - { label: 'Family', value: family }
+          - { label: 'Couple', value: couple }
       - { label: Topics, name: tags, widget: list, required: false, default: [], hint: 'Comma-separated, e.g. road trip, budget, with kids' }
       - { label: 'Feature on the homepage?', name: featured, widget: boolean, default: false, hint: 'The newest featured story is shown big at the top of the homepage.' }
       - { label: 'Sponsored story?', name: sponsored, widget: boolean, default: false, hint: 'Switch on if any part of the trip was paid for by a partner. A clear note is added automatically.' }
@@ -96,6 +97,36 @@ collections:
           - { label: Title, name: title, widget: string }
           - { label: Short summary, name: description, widget: string }
           - { label: Page text, name: body, widget: markdown }
+      - label: Homepage
+        name: homepage
+        file: src/data/homepage.json
+        description: The words at the top of the homepage and on its section headings.
+        fields:
+          - { label: Small heading above the title, name: eyebrow, widget: string, required: false, hint: 'Shown in small capital letters, e.g. A South African travel journal' }
+          - { label: Big title – first line, name: headlineLine1, widget: string }
+          - { label: Big title – second line (shown in orange italics), name: headlineLine2, widget: string, required: false }
+          - { label: Introduction, name: intro, widget: text, hint: 'Two or three sentences under the big title.' }
+          - label: Main button
+            name: primaryButton
+            widget: object
+            fields:
+              - { label: Button text, name: label, widget: string }
+              - { label: Goes to, name: link, widget: string, hint: 'e.g. /blog/ for all stories' }
+          - label: Second button
+            name: secondaryButton
+            widget: object
+            fields:
+              - { label: Button text, name: label, widget: string }
+              - { label: Goes to, name: link, widget: string, hint: 'e.g. /newsletter/ for the sign-up page' }
+          - { label: Heading above the three regions, name: regionsHeading, widget: string }
+          - label: Region descriptions
+            name: regionBlurbs
+            widget: object
+            fields:
+              - { label: South Africa, name: southAfrica, widget: string }
+              - { label: Rest of Africa, name: africa, widget: string }
+              - { label: The wider world, name: world, widget: string }
+          - { label: Heading above the latest stories, name: latestHeading, widget: string }
 
   # ───────────── Site settings ─────────────
   - name: settings
