@@ -4,7 +4,7 @@ description: "A family getaway in the southern bergs in tranquil self catering
   log apartments.  At the resort we enjoyed quality time in the games room,
   canoeing, camp fires and the short hikes around the dams. "
 date: 2026-06-26
-updated: 2026-06-29
+updated: ""
 cover: ../../assets/uploads/20260627_135220-1-.jpg
 coverAlt: "Picture from the cave itself and our journey to the cave "
 country: South Africa
