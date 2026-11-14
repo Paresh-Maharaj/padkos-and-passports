@@ -1,15 +1,21 @@
 {
-  "eyebrow": "A South African travel journal",
-  "headlineLine1": "Pack the padkos.",
-  "headlineLine2": "Bring the passport.",
-  "intro": "Slow roads and open skies — solo or with the whole family, from the Drakensberg to New York. Honest stories, real costs in rand, and the little things that make a trip easier at any age.",
-  "primaryButton": { "label": "Read the latest stories", "link": "/blog/" },
-  "secondaryButton": { "label": "Get the monthly postcard", "link": "/newsletter/" },
   "regionsHeading": "Where to next?",
+  "secondaryButton": {
+    "label": "Get the monthly postcard",
+    "link": "/newsletter/"
+  },
+  "headlineLine1": "Pack the padkos.",
+  "eyebrow": "A global travel journal from the perspective of a South Africa",
+  "headlineLine2": "Bring the passport.",
+  "intro": "Slow roads and open skies: solo, with my travel buddy (my wife) or with the whole family, from the Drakensberg to New York. Honest stories, real costs in rand, and the little things that make a trip easier at any age.",
   "regionBlurbs": {
-    "southAfrica": "Karoo dorps, Drakensberg passes and the long way round the coast.",
-    "africa": "Border crossings, bush camps and neighbours worth the drive.",
-    "world": "The bigger trips — planned for, saved for, and worth every rand."
+    "southAfrica": "Free State dorps, Drakensberg passes and the long way round the coast.",
+    "africa": "Border crossings, river cruises and neighbours worth the drive.",
+    "world": "The bigger trips: planned for, saved for, and worth every rand."
+  },
+  "primaryButton": {
+    "label": "Read the latest stories",
+    "link": "/blog/"
   },
   "latestHeading": "Latest from the road"
 }
