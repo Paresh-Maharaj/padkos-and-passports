@@ -5,6 +5,7 @@ import Base from '../../layouts/Base.astro';
 import Tag from '../../components/Tag.astro';
 import PostCard from '../../components/PostCard.astro';
 import SponsorSlot from '../../components/SponsorSlot.astro';
+import Gallery from '../../components/Gallery.astro';
 import Newsletter from '../../components/Newsletter.astro';
 import settings from '../../data/settings.json';
 import { getPosts, formatDate, readingTime, slugify, TRIP_TYPES, REGIONS, type Post } from '../../lib/posts';
@@ -91,6 +92,8 @@ const share = [
       <div class="prose">
         <Content />
       </div>
+
+      <Gallery photos={d.gallery} />
 
       <div class="share" aria-label="Share this story">
         <span class="eyebrow">Share</span>

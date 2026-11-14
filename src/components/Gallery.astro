@@ -1,0 +1,87 @@
+---
+// Photo gallery shown after a story. Add photos in the editor under
+// "Photo gallery". Tap a photo to see it large; use the arrows or
+// your keyboard's left/right keys to move between photos.
+import { Image, getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Photo { image: ImageMetadata; alt: string; caption?: string }
+interface Props { photos: Photo[]; heading?: string }
+const { photos, heading = 'More photos from the trip' } = Astro.props;
+
+const large = await Promise.all(photos.map((p) => getImage({ src: p.image, width: 1600, format: 'webp' })));
+---
+
+{photos.length > 0 && (
+  <section class="gallery" aria-labelledby="gallery-heading" data-gallery>
+    <h2 id="gallery-heading" class="gallery__heading">{heading}</h2>
+    <ul class="gallery__grid" role="list">
+      {photos.map((p, i) => (
+        <li>
+          <figure class="gallery__item">
+            <a class="gallery__link" href={large[i].src} data-index={i} aria-label={`View larger: ${p.alt}`}>
+              <Image src={p.image} alt={p.alt} widths={[360, 600, 900]} sizes="(max-width: 600px) 50vw, 360px" loading="lazy" />
+            </a>
+            {p.caption && <figcaption>{p.caption}</figcaption>}
+          </figure>
+        </li>
+      ))}
+    </ul>
+
+    <dialog class="lightbox" aria-label="Photo viewer">
+      <figure class="lightbox__figure">
+        <img class="lightbox__img" alt="" />
+        <figcaption class="lightbox__caption"></figcaption>
+      </figure>
+      <div class="lightbox__controls">
+        <button type="button" class="btn btn--secondary lightbox__prev">← Previous</button>
+        <button type="button" class="btn btn--secondary lightbox__next">Next →</button>
+        <span class="lightbox__count" aria-live="polite"></span>
+        <button type="button" class="btn btn--primary lightbox__close">Close</button>
+      </div>
+    </dialog>
+
+    <script type="application/json" class="gallery__data" set:html={JSON.stringify(photos.map((p, i) => ({ src: large[i].src, alt: p.alt, caption: p.caption ?? '' })))} />
+  </section>
+)}
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((root) => {
+    const photos = JSON.parse(root.querySelector('.gallery__data')!.textContent || '[]');
+    const dialog = root.querySelector('dialog')!;
+    const img = dialog.querySelector<HTMLImageElement>('.lightbox__img')!;
+    const cap = dialog.querySelector<HTMLElement>('.lightbox__caption')!;
+    const count = dialog.querySelector<HTMLElement>('.lightbox__count')!;
+    const prev = dialog.querySelector<HTMLButtonElement>('.lightbox__prev')!;
+    const next = dialog.querySelector<HTMLButtonElement>('.lightbox__next')!;
+    let current = 0;
+
+    const show = (i: number) => {
+      current = (i + photos.length) % photos.length;
+      const p = photos[current];
+      img.src = p.src;
+      img.alt = p.alt;
+      cap.textContent = p.caption || p.alt;
+      count.textContent = `${current + 1} of ${photos.length}`;
+    };
+    const single = photos.length < 2;
+    prev.hidden = single;
+    next.hidden = single;
+
+    root.querySelectorAll<HTMLAnchorElement>('.gallery__link').forEach((a) => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        show(Number(a.dataset.index));
+        dialog.showModal();
+      });
+    });
+    prev.addEventListener('click', () => show(current - 1));
+    next.addEventListener('click', () => show(current + 1));
+    dialog.querySelector('.lightbox__close')!.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+    dialog.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') show(current - 1);
+      if (e.key === 'ArrowRight') show(current + 1);
+    });
+  });
+</script>

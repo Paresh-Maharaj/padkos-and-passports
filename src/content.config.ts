@@ -20,6 +20,16 @@ const posts = defineCollection({
       draft: z.boolean().default(false),
       sponsored: z.boolean().default(false),
       sponsorName: z.string().optional(),
+      // Extra photos shown as a gallery after the story.
+      gallery: z
+        .array(
+          z.object({
+            image: image(),
+            alt: z.string(),
+            caption: z.string().optional(),
+          }),
+        )
+        .default([]),
     }),
 });
 
