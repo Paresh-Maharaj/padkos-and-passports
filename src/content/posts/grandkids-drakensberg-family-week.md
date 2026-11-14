@@ -4,8 +4,8 @@ description: "A couple’s trip to the 164th running of the Cape Town Met
   horse-racing at Kenilworth on 31st January 2026 and holidays in the West
   Coast. "
 date: 2026-01-27
-cover: ../../assets/uploads/whatsapp-image-2026-11-14-at-19.52.48.jpeg
-coverAlt: "Table Mountain "
+cover: ../../assets/uploads/20260131_161600-1-.jpg
+coverAlt: "The 2026 Met races "
 country: South Africa
 places:
   - name: Cape Town
@@ -18,8 +18,10 @@ sponsored: false
 gallery:
   - image: ../../assets/uploads/whatsapp-image-2026-11-14-at-19.49.00.jpeg
     alt: "Boulders Beach "
-  - image: ../../assets/uploads/whatsapp-image-2026-11-14-at-19.54.17.jpeg
-    alt: Museum
+  - image: ../../assets/uploads/20260129_172620.jpg
+    alt: "Club Mykonos "
+  - image: ../../assets/uploads/20260130_110420.jpg
+    alt: Famous padstal
 draft: false
 ---
 **Day 1.**   After disembarking at the Cape Town International Airport, we collected the hired vehicle and visited my wife’s nephew, niece and kid Sonia in Milnerton. After brunch we proceeded to the picturesque **Langebaan just** over an hour from Cape Town which was going to be our base for the next 3 nights.  From Langebaan we drifted at leisure to the following towns.
