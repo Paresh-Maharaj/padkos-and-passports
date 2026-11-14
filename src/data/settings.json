@@ -19,10 +19,10 @@
   "tagline": "Slow roads and open skies: solo, with my wife, or with the whole family, from the Drakensberg to New York.",
   "siteTitle": "Padkos & Passports",
   "mediaKit": {
-    "monthlyReaders": "2,400",
-    "newsletterSubscribers": "650",
-    "socialFollowers": "3,100",
-    "audience": "Mostly South Africans aged 45–75 who plan, save for and take two or three trips a year — split between road trips at home and one bigger overseas journey.",
+    "monthlyReaders": "4",
+    "newsletterSubscribers": "4",
+    "socialFollowers": "TBC",
+    "audience": "Mostly South Africans aged 45–75 who plan, save for and take two or three trips a year: split between road trips at home and one bigger overseas journey.",
     "offers": [
       "Sponsored trip write-ups (always clearly labelled)",
       "Destination and accommodation reviews",
@@ -46,5 +46,8 @@
     "message": "",
     "url": "",
     "buttonLabel": "Find out more"
+  },
+  "verification": {
+    "google": "<meta name=\"google-site-verification\" content=\"hUGQeIcwykfmrhO1U97MBV4aIzL5O4MW0IM4Zv_3QZE\" />"
   }
 }
