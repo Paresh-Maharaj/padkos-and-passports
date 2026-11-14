@@ -5,7 +5,7 @@ description: New York City is a vibrant cosmopolitan city with great diversity
   I had watched while growing up and this trip came to fruition in June 2025.
 date: 2025-06-06
 updated: ""
-cover: ../../assets/uploads/sample-kyoto.jpg
+cover: ../../assets/uploads/20250607_172552.jpg
 coverAlt: The Brooklyn Bridge on a sunny day in NYC
 country: USA
 region: world
@@ -17,6 +17,9 @@ tags:
   - Brooklyn bridge
 featured: false
 sponsored: false
+gallery:
+  - image: ../../assets/uploads/20250607_135814.jpg
+    alt: New York breakfast at CAKE BOSS IN NYC
 draft: false
 ---
 New York City is a vibrant cosmopolitan city with great diversity and landmarks.  The city was on top of my bucket list, largely due to the movies I had watched while growing up.\
