@@ -2,6 +2,14 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
+// The editor saves an empty "Updated on" box as '' — treat blank or
+// unreadable dates as "not set" instead of stopping the site from building.
+const optionalDate = z.preprocess((value) => {
+  if (value === '' || value === null || value === undefined) return undefined;
+  const d = value instanceof Date ? value : new Date(String(value));
+  return Number.isNaN(d.valueOf()) ? undefined : d;
+}, z.date().optional());
+
 const posts = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/posts' }),
   schema: ({ image }) =>
@@ -11,7 +19,7 @@ const posts = defineCollection({
       title: z.string(),
       description: z.string(),
       date: z.coerce.date(),
-      updated: z.coerce.date().optional(),
+      updated: optionalDate,
       cover: image(),
       coverAlt: z.string(),
       country: z.string(),
