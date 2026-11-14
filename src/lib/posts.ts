@@ -10,8 +10,22 @@ export const REGIONS = {
 
 export const TRIP_TYPES = {
   solo: 'Solo travel',
+  couple: 'Travelling as a couple',
   family: 'Family travel',
 } as const;
+
+/** Short names used on tags and in the menu. */
+export const TRIP_LABELS = {
+  solo: 'Solo',
+  couple: 'Couple',
+  family: 'Family',
+} as const;
+
+/** The main country plus any others visited on the same trip, tidied and without repeats. */
+export function countriesOf(post: Post): string[] {
+  const all = [post.data.country, ...post.data.alsoVisited].map((c) => c.trim()).filter(Boolean);
+  return [...new Map(all.map((c) => [c.toLowerCase(), c])).values()];
+}
 
 /** All published posts, newest first. Drafts only show while previewing locally. */
 export async function getPosts(): Promise<Post[]> {

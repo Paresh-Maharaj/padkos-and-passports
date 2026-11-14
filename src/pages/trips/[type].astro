@@ -14,6 +14,7 @@ interface Props { type: keyof typeof TRIP_TYPES; posts: Post[] }
 const { type, posts } = Astro.props;
 const intro = {
   solo: 'Travelling alone after retirement: safety, single supplements, meeting people and the quiet joy of setting your own pace.',
+  couple: 'Trips with my travel buddy, my wife: slower days, good food, comfortable stays and the places we have always meant to see together.',
   family: 'Holidays with the children and grandchildren: kid-friendly stops, multi-generation stays and keeping everyone fed and happy.',
 }[type];
 ---

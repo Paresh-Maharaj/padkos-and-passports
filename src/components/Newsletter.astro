@@ -16,7 +16,7 @@ const ready = Boolean(n.formAction);
         <button class="btn btn--primary" type="submit">{n.buttonLabel}</button>
       </form>
     ) : (
-      <p class="newsletter__fine">The sign-up form appears here once a newsletter address is added in Site settings. Until then, readers can <a href={`mailto:${settings.author.email}?subject=Add%20me%20to%20the%20newsletter`}>email to join</a>.</p>
+      <p><a class="btn btn--primary" href={`mailto:${settings.author.email}?subject=Please%20add%20me%20to%20Postcards%20from%20the%20road`}>Email me to join the list</a></p>
     )}
     <p class="newsletter__fine">I'll only use your address to send the newsletter. <a href="/disclosure/#privacy">Privacy</a>.</p>
   </section>

@@ -1,11 +1,17 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getPosts, REGIONS, slugify } from '../../lib/posts';
+import { getPosts, REGIONS, slugify, countriesOf } from '../../lib/posts';
 
 const posts = await getPosts();
 const byRegion = Object.entries(REGIONS).map(([key, label]) => {
   const countries = new Map<string, number>();
-  posts.filter((p) => p.data.region === key).forEach((p) => countries.set(p.data.country, (countries.get(p.data.country) ?? 0) + 1));
+  posts.forEach((p) =>
+    countriesOf(p).forEach((c) => {
+      // South Africa always sits under South Africa, whatever the trip's main region.
+      const region = c.toLowerCase() === 'south africa' ? 'south-africa' : p.data.region;
+      if (region === key) countries.set(c, (countries.get(c) ?? 0) + 1);
+    }),
+  );
   return { key, label, countries: [...countries.entries()].sort((a, b) => a[0].localeCompare(b[0])) };
 });
 ---

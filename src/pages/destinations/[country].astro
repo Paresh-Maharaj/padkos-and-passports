@@ -1,14 +1,15 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PostCard from '../../components/PostCard.astro';
-import { getPosts, slugify, REGIONS, type Post } from '../../lib/posts';
+import { getPosts, slugify, countriesOf, REGIONS, type Post } from '../../lib/posts';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
-  const countries = [...new Set(posts.map((p) => p.data.country))];
-  return countries.map((country) => ({
-    params: { country: slugify(country) },
-    props: { country, posts: posts.filter((p) => p.data.country === country) },
+  const bySlug = new Map<string, string>();
+  posts.forEach((p) => countriesOf(p).forEach((c) => { if (!bySlug.has(slugify(c))) bySlug.set(slugify(c), c); }));
+  return [...bySlug.entries()].map(([slug, country]) => ({
+    params: { country: slug },
+    props: { country, posts: posts.filter((p) => countriesOf(p).some((c) => slugify(c) === slug)) },
   }));
 }
 interface Props { country: string; posts: Post[] }
@@ -17,7 +18,7 @@ const { country, posts } = Astro.props;
 
 <Base title={`Travel stories from ${country}`} description={`Every trip I've written up in ${country}: where I stayed, what it cost and what I'd do differently.`}>
   <section class="container section">
-    <p class="eyebrow"><a href="/destinations/">Destinations</a> · {REGIONS[posts[0].data.region]}</p>
+    <p class="eyebrow"><a href="/destinations/">Destinations</a> · {country.toLowerCase() === 'south africa' ? REGIONS['south-africa'] : REGIONS[posts[0].data.region]}</p>
     <h1>{country}</h1>
   </section>
   <section class="container"><div class="grid">{posts.map((p) => <PostCard post={p} />)}</div></section>

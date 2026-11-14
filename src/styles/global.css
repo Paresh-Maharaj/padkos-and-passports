@@ -90,7 +90,11 @@ a:hover { color: var(--ochre-hover); text-decoration-thickness: 2px; }
 .prose th, .prose td { text-align: left; padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--rule); }
 .prose code { font-size: 0.9em; background: var(--surface-200); padding: 0.1em 0.35em; border-radius: var(--radius-sm); }
 
-.author-box { display: grid; gap: var(--space-2); padding-block: var(--space-5); border-block: 1px solid var(--rule); }
+.author-box { display: flex; gap: var(--space-4); align-items: center; padding-block: var(--space-5); border-block: 1px solid var(--rule); }
+.author-box > div { display: grid; gap: var(--space-2); }
+.author-photo { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; flex: none; }
+.author-photo--large { width: 160px; height: 160px; margin-bottom: var(--space-5); }
+@media (max-width: 520px) { .author-box { align-items: flex-start; } .author-photo { width: 64px; height: 64px; } }
 .share { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
 
 /* ---------- Lists ---------- */
@@ -111,3 +115,13 @@ a:hover { color: var(--ochre-hover); text-decoration-thickness: 2px; }
 .region-card--africa:hover { color: var(--on-ochre); }
 .region-card--world:hover { color: var(--on-ocean); }
 .stats { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); }
+
+/* Phones: name and reader buttons on one row, the menu as one swipeable row below */
+@media (max-width: 760px) {
+  .site-header__inner { display: grid; grid-template-columns: 1fr auto; grid-template-areas: 'brand tools' 'nav nav'; gap: var(--space-1) var(--space-3); padding-block: var(--space-3) var(--space-2); }
+  .brand { grid-area: brand; font-size: 21px; }
+  .reader-tools { grid-area: tools; }
+  .nav { grid-area: nav; flex-wrap: nowrap; overflow-x: auto; margin-inline: calc(var(--space-3) * -1); padding-inline: var(--space-1); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a { white-space: nowrap; padding: var(--space-2) var(--space-3); }
+}

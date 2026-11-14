@@ -18,6 +18,8 @@
   --on-fynbos: #ffffff;
   --ocean: #1d5a73;         /* World region, focus ring */
   --on-ocean: #ffffff;
+  --protea: #8e3b5b;        /* Couple trips (berry protea) */
+  --on-protea: #ffffff;
   --sunset: #e0a526;        /* highlight: decoration only, never text */
   --focus: #1d5a73;
   --shadow-card: 0 1px 2px rgba(42, 33, 26, 0.06), 0 8px 24px rgba(42, 33, 26, 0.08);
@@ -39,6 +41,8 @@
   --on-fynbos: #10170f;
   --ocean: #82c2db;
   --on-ocean: #0c1820;
+  --protea: #e9a6c2;
+  --on-protea: #1a0f14;
   --sunset: #e9b949;
   --focus: #82c2db;
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35);
@@ -61,6 +65,8 @@
     --on-fynbos: #10170f;
     --ocean: #82c2db;
     --on-ocean: #0c1820;
+    --protea: #e9a6c2;
+    --on-protea: #1a0f14;
     --sunset: #e9b949;
     --focus: #82c2db;
     --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35);

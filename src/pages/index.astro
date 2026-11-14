@@ -45,7 +45,7 @@ const blurbs: Record<string, string> = {
         <a class={`region-card region-card--${key}`} href={`/destinations/#${key}`}>
           <strong>{label}</strong>
           <span>{blurbs[key]}</span>
-          <span>{count(key)} {count(key) === 1 ? 'story' : 'stories'}</span>
+          <span>{count(key) === 0 ? 'Stories coming soon' : `${count(key)} ${count(key) === 1 ? 'story' : 'stories'}`}</span>
         </a>
       ))}
     </div>

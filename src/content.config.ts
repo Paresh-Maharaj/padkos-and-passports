@@ -23,8 +23,12 @@ const posts = defineCollection({
       cover: image(),
       coverAlt: z.string(),
       country: z.string(),
+      // Other countries visited on the same trip (optional).
+      alsoVisited: z.preprocess((v) => (Array.isArray(v) ? v.filter((c) => typeof c === 'string' && c.trim()) : []), z.array(z.string())),
+      // When the trip happened, in your own words, e.g. "7–10 August 2026" (optional).
+      travelDates: z.string().optional(),
       region: z.enum(['south-africa', 'africa', 'world']),
-      tripType: z.enum(['solo', 'family']),
+      tripType: z.enum(['solo', 'couple', 'family']),
       tags: z.array(z.string()).default([]),
       featured: z.boolean().default(false),
       draft: z.boolean().default(false),

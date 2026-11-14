@@ -52,10 +52,13 @@ collections:
       - { label: Updated on, name: updated, widget: datetime, format: 'YYYY-MM-DD', date_format: 'D MMMM YYYY', time_format: false, picker_utc: true, required: false, hint: 'Only fill this in if you revise an older story.' }
       - { label: Cover photo, name: cover, widget: image, hint: 'Landscape photos work best. Any size is fine — the site shrinks them automatically.' }
       - { label: Describe the cover photo, name: coverAlt, widget: string, hint: 'What is in the photo? e.g. "Sunset over the Swartberg Pass". Helps blind readers and Google.' }
-      - { label: Country, name: country, widget: string, hint: 'e.g. South Africa, Namibia, Japan. Use the same spelling each time.' }
+      - { label: Main country, name: country, widget: string, hint: 'Where most of the trip happened, e.g. South Africa, Zimbabwe, Egypt. Use the same spelling each time.' }
+      - { label: Other countries visited on this trip, name: alsoVisited, widget: list, required: false, default: [], hint: 'Optional. Separate with commas, e.g. Zambia, Botswana, Namibia. The story then appears under each country on the Destinations page.' }
+      - { label: When you travelled, name: travelDates, widget: string, required: false, hint: 'Optional, in your own words, e.g. 7–10 August 2026 or Winter 2025.' }
       - label: Region
         name: region
         widget: select
+        hint: 'Pick the region of the main country. Egypt, Zimbabwe, Namibia and the rest of the continent are "Rest of Africa".'
         options:
           - { label: 'South Africa', value: south-africa }
           - { label: 'Rest of Africa', value: africa }
@@ -65,8 +68,8 @@ collections:
         widget: select
         options:
           - { label: 'Solo', value: solo }
+          - { label: 'Couple (with my travel buddy)', value: couple }
           - { label: 'Family', value: family }
-          - { label: 'Couple', value: couple }
       - { label: Topics, name: tags, widget: list, required: false, default: [], hint: 'Comma-separated, e.g. road trip, budget, with kids' }
       - { label: 'Feature on the homepage?', name: featured, widget: boolean, default: false, hint: 'The newest featured story is shown big at the top of the homepage.' }
       - { label: 'Sponsored story?', name: sponsored, widget: boolean, default: false, hint: 'Switch on if any part of the trip was paid for by a partner. A clear note is added automatically.' }
@@ -76,6 +79,8 @@ collections:
         widget: list
         required: false
         collapsed: true
+        allow_add: true
+        add_to_top: false
         label_singular: photo
         summary: '{{fields.alt}}'
         hint: 'Optional. Click "Add photo" for each picture. They appear as a grid after the story; readers can tap one to see it large.'
@@ -149,6 +154,7 @@ collections:
               - { label: Short bio, name: shortBio, widget: text }
               - { label: "Where you're based", name: location, widget: string }
               - { label: Contact email, name: email, widget: string }
+              - { label: Your photo, name: photo, widget: image, required: false, media_folder: /src/assets/uploads, public_folder: /src/assets/uploads, hint: 'Optional. A friendly head-and-shoulders photo, shown on the About page and at the end of every story.' }
           - label: Social media links
             name: social
             widget: object

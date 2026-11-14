@@ -8,7 +8,9 @@ import SponsorSlot from '../../components/SponsorSlot.astro';
 import Gallery from '../../components/Gallery.astro';
 import Newsletter from '../../components/Newsletter.astro';
 import settings from '../../data/settings.json';
-import { getPosts, formatDate, readingTime, slugify, TRIP_TYPES, REGIONS, type Post } from '../../lib/posts';
+import { findUpload } from '../../lib/uploads';
+const authorPhoto = findUpload((settings.author as { photo?: string }).photo);
+import { getPosts, formatDate, readingTime, slugify, countriesOf, TRIP_TYPES, type Post } from '../../lib/posts';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -19,12 +21,14 @@ interface Props { post: Post; all: Post[] }
 const { post, all } = Astro.props;
 const d = post.data;
 const { Content } = await render(post);
+const countries = countriesOf(post);
+const regionFor = (c: string) => (c.toLowerCase() === 'south africa' ? 'south-africa' : d.region);
 
 const url = new URL(Astro.url.pathname, Astro.site).href;
 const cover = await getImage({ src: d.cover, width: 1200, format: 'jpg' });
 const related = all
   .filter((p) => p.id !== post.id)
-  .map((p) => ({ p, score: (p.data.country === d.country ? 3 : 0) + (p.data.region === d.region ? 1 : 0) + (p.data.tripType === d.tripType ? 1 : 0) + p.data.tags.filter((t) => d.tags.includes(t)).length }))
+  .map((p) => ({ p, score: countriesOf(p).filter((c) => countries.includes(c)).length * 3 + (p.data.region === d.region ? 1 : 0) + (p.data.tripType === d.tripType ? 1 : 0) + p.data.tags.filter((t) => d.tags.includes(t)).length }))
   .sort((a, b) => b.score - a.score)
   .slice(0, 3)
   .map((x) => x.p);
@@ -41,8 +45,8 @@ const jsonLd = [
     author: { '@type': 'Person', name: settings.author.name, url: new URL('/about/', Astro.site).href },
     publisher: { '@type': 'Person', name: settings.author.name },
     mainEntityOfPage: url,
-    keywords: [d.country, ...d.tags].join(', '),
-    contentLocation: { '@type': 'Place', name: d.country },
+    keywords: [...countries, ...d.tags].join(', '),
+    contentLocation: countries.map((name) => ({ '@type': 'Place', name })),
   },
   {
     '@context': 'https://schema.org',
@@ -68,7 +72,7 @@ const share = [
     <header class="narrow article-head">
       <div class="tag-row">
         <Tag href={`/trips/${d.tripType}/`} variant={d.tripType}>{TRIP_TYPES[d.tripType]}</Tag>
-        <Tag href={`/destinations/${slugify(d.country)}/`} variant={d.region}>{d.country}</Tag>
+        {countries.map((c) => <Tag href={`/destinations/${slugify(c)}/`} variant={regionFor(c)}>{c}</Tag>)}
         {d.sponsored && <Tag variant="sponsored">Sponsored</Tag>}
       </div>
       <h1 data-pagefind-meta="title">{d.title}</h1>
@@ -78,6 +82,7 @@ const share = [
         {d.updated && <> · Updated <time datetime={d.updated.toISOString()}>{formatDate(d.updated)}</time></>}
         · {readingTime(post.body)} min read
       </p>
+      {d.travelDates && <p class="article-meta" style="margin-top:4px">Travelled: {d.travelDates}</p>}
     </header>
 
     <figure class="container article-cover" style="max-width:1000px">
@@ -107,8 +112,11 @@ const share = [
       )}
 
       <div class="author-box" data-pagefind-ignore>
-        <p class="eyebrow">About the author</p>
-        <p>{settings.author.shortBio} <a href="/about/">More about me</a>.</p>
+        {authorPhoto && <Image class="author-photo" src={authorPhoto} alt="" width={96} height={96} fit="cover" />}
+        <div>
+          <p class="eyebrow">About the author</p>
+          <p>{settings.author.shortBio} <a href="/about/">More about me</a>.</p>
+        </div>
       </div>
 
       <SponsorSlot />

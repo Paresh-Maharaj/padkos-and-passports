@@ -55,6 +55,7 @@ a.tag:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 .tag--south-africa, .tag--solo { background: var(--fynbos); color: var(--on-fynbos); border-color: var(--fynbos); }
 .tag--world, .tag--family { background: var(--ocean); color: var(--on-ocean); border-color: var(--ocean); }
 .tag--africa { background: var(--ochre); color: var(--on-ochre); border-color: var(--ochre); }
+.tag--couple { background: var(--protea); color: var(--on-protea); border-color: var(--protea); }
 .tag--sponsored { background: var(--surface-100); color: var(--ink); border: 1px dashed var(--rule-strong); }
 .tag-row { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 

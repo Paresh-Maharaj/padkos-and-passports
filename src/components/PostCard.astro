@@ -1,11 +1,13 @@
 ---
 import { Image } from 'astro:assets';
 import Tag from './Tag.astro';
-import { formatDate, readingTime, REGIONS, TRIP_TYPES, type Post } from '../lib/posts';
+import { formatDate, readingTime, TRIP_LABELS, countriesOf, type Post } from '../lib/posts';
 interface Props { post: Post; feature?: boolean; eager?: boolean }
 const { post, feature = false, eager = false } = Astro.props;
 const d = post.data;
 const Heading = feature ? 'h2' : 'h3';
+const countries = countriesOf(post);
+const extra = countries.length - 1;
 ---
 
 <article class:list={['post-card', { 'post-card--feature': feature }]}>
@@ -14,8 +16,8 @@ const Heading = feature ? 'h2' : 'h3';
   </div>
   <div class="post-card__body">
     <div class="tag-row">
-      <Tag href={`/trips/${d.tripType}/`} variant={d.tripType}>{TRIP_TYPES[d.tripType].replace(' travel', '')}</Tag>
-      <Tag variant={d.region}>{d.country}</Tag>
+      <Tag href={`/trips/${d.tripType}/`} variant={d.tripType}>{TRIP_LABELS[d.tripType]}</Tag>
+      <Tag variant={d.region}>{extra > 0 ? `${countries[0]} +${extra}` : countries[0]}</Tag>
       {d.sponsored && <Tag variant="sponsored">Sponsored</Tag>}
     </div>
     <Heading class="post-card__title"><a href={`/blog/${post.id}/`}>{d.title}</a></Heading>
