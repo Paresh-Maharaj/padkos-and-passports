@@ -82,8 +82,8 @@ collections:
           - { label: 'Couple (with my travel buddy)', value: couple }
           - { label: 'Family', value: family }
       - { label: Topics, name: tags, widget: list, required: false, default: [], hint: 'Comma-separated, e.g. road trip, budget, with kids' }
-      - { label: 'Feature on the homepage?', name: featured, widget: boolean, default: false, hint: 'The newest featured story is shown big at the top of the homepage.' }
-      - { label: 'Sponsored story?', name: sponsored, widget: boolean, default: false, hint: 'Switch on if any part of the trip was paid for by a partner. A clear note is added automatically.' }
+      - { label: 'Feature on the homepage?', name: featured, widget: boolean, required: false, default: false, hint: 'The newest featured story is shown big at the top of the homepage.' }
+      - { label: 'Sponsored story?', name: sponsored, widget: boolean, required: false, default: false, hint: 'Switch on if any part of the trip was paid for by a partner. A clear note is added automatically.' }
       - { label: Sponsor name, name: sponsorName, widget: string, required: false, hint: 'Only needed for sponsored stories.' }
       - label: Photo gallery
         name: gallery
@@ -99,7 +99,7 @@ collections:
           - { label: Photo, name: image, widget: image }
           - { label: Describe the photo, name: alt, widget: string, hint: 'What is in the picture? Helps blind readers and Google.' }
           - { label: Caption, name: caption, widget: string, required: false }
-      - { label: Hide from the site, name: draft, widget: boolean, default: false, hint: 'Keeps a published story off the site without deleting it.' }
+      - { label: Hide from the site, name: draft, widget: boolean, required: false, default: false, hint: 'Keeps a published story off the site without deleting it.' }
       - { label: Story, name: body, widget: markdown, hint: 'Use the toolbar for headings, bold text, lists and photos.' }
 
   # ───────────── Pages ─────────────
