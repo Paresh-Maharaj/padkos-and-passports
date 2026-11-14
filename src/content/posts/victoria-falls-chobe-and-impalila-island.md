@@ -8,10 +8,19 @@ description: A family journey from the 7th to the 10th of August 2026 to one of
 date: 2026-09-12
 cover: ../../assets/uploads/20260808_112233.jpg
 coverAlt: "Falls from Zimbabwe side "
-country: South Africa
-region: south-africa
-tripType: solo
-tags: []
+country: Zimbabwe
+alsoVisited:
+  - Botswana
+  - Zambia
+  - Namibia
+travelDates: August 2026
+region: africa
+tripType: family
+tags:
+  - Rivers
+  - Safari
+  - Africa
+  - RoadTrip
 featured: true
 sponsored: false
 draft: false
