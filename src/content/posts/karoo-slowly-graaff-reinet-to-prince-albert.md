@@ -6,7 +6,7 @@ description: A family journey from the 7th to the 10th of August 2026 to one of
   elephants culminating in Impalila Island in the Namibian desert. This journey
   took us through the border posts of Zimbabwe, Zambia, Botswana, and Namibia.
 date: 2026-09-12
-cover: ../../assets/uploads/sample-karoo.jpg
+cover: ../../assets/uploads/20260808_112233.jpg
 coverAlt: "Falls from Zimbabwe side "
 country: South Africa
 region: south-africa
