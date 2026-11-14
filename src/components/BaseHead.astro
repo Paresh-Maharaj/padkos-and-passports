@@ -48,6 +48,12 @@ const siteLd = {
   publisher: { '@type': 'Person', name: settings.author.name },
 };
 const beacon = settings.analytics.cloudflareBeaconToken;
+// Search Console / Bing "HTML tag" verification codes from Site settings.
+// Accepts just the code or the whole <meta …> tag pasted from Google.
+const codeOf = (v?: string) => (v ? (/content="([^"]+)"/.exec(v)?.[1] ?? v).trim() : '');
+const verify = (settings as { verification?: { google?: string; bing?: string } }).verification ?? {};
+const googleCode = codeOf(verify.google);
+const bingCode = codeOf(verify.bing);
 ---
 
 <meta charset="utf-8" />
@@ -58,6 +64,8 @@ const beacon = settings.analytics.cloudflareBeaconToken;
 {noindex && <meta name="robots" content="noindex" />}
 <meta name="author" content={settings.author.name} />
 <meta name="generator" content={Astro.generator} />
+{googleCode && <meta name="google-site-verification" content={googleCode} />}
+{bingCode && <meta name="msvalidate.01" content={bingCode} />}
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link rel="alternate" type="application/rss+xml" title={settings.siteTitle} href={new URL('rss.xml', Astro.site)} />

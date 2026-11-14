@@ -184,7 +184,7 @@ collections:
             widget: object
             collapsed: true
             fields:
-              - { label: Show the sign-up box, name: enabled, widget: boolean }
+              - { label: Show the sign-up box, name: enabled, widget: boolean, required: false }
               - { label: Heading, name: heading, widget: string }
               - { label: Blurb, name: blurb, widget: text }
               - { label: Form action (from your newsletter provider), name: formAction, widget: string, required: false, hint: 'The web address your provider gives for an "HTML form" embed.' }
@@ -196,7 +196,7 @@ collections:
             collapsed: true
             hint: 'A small, clearly labelled box at the end of every story.'
             fields:
-              - { label: Show the sponsor banner, name: enabled, widget: boolean }
+              - { label: Show the sponsor banner, name: enabled, widget: boolean, required: false }
               - { label: Label, name: label, widget: string }
               - { label: Sponsor name, name: name, widget: string, required: false }
               - { label: Message, name: message, widget: text, required: false }
@@ -212,6 +212,14 @@ collections:
               - { label: Social followers, name: socialFollowers, widget: string }
               - { label: Who your readers are, name: audience, widget: text }
               - { label: What you offer, name: offers, widget: list, field: { label: Offer, name: offer, widget: string } }
+          - label: Search engine verification
+            name: verification
+            widget: object
+            collapsed: true
+            hint: 'Proves to Google and Bing that this is your website. Paste the code from their "HTML tag" option.'
+            fields:
+              - { label: Google Search Console code, name: google, widget: string, required: false, hint: 'In Search Console choose "HTML tag", copy the whole line it shows and paste it here.' }
+              - { label: Bing Webmaster code, name: bing, widget: string, required: false }
           - label: Visitor statistics
             name: analytics
             widget: object
