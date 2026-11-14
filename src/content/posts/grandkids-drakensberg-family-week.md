@@ -22,6 +22,8 @@ gallery:
     alt: "Club Mykonos "
   - image: ../../assets/uploads/20260130_110420.jpg
     alt: Famous padstal
+  - image: ../../assets/uploads/20260130_135508.jpg
+    alt: Mandela's face against Table Mountain
 draft: false
 ---
 **Day 1.**   After disembarking at the Cape Town International Airport, we collected the hired vehicle and visited my wife’s nephew, niece and kid Sonia in Milnerton. After brunch we proceeded to the picturesque **Langebaan just** over an hour from Cape Town which was going to be our base for the next 3 nights.  From Langebaan we drifted at leisure to the following towns.
