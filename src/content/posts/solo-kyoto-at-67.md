@@ -10,7 +10,7 @@ cover: ../../assets/uploads/20250607_172552.jpg
 coverAlt: The Brooklyn Bridge on a sunny day in NYC
 country: USA
 region: world
-tripType: family
+tripType: couple
 tags:
   - Pizza
   - Cake Boss
