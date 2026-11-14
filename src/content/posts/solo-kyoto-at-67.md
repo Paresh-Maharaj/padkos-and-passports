@@ -2,7 +2,8 @@
 title: "CHASING LIGHTS IN THE BIG APPLE  "
 description: New York City is a vibrant cosmopolitan city with great diversity
   and landmarks.  The city was top of my bucket list, largely due to the movies
-  I had watched while growing up and this trip came to fruition in June 2025.
+  I had watched while growing up and this week long trip came to fruition in
+  June 2025.
 date: 2025-06-06
 updated: 2025-06-06
 cover: ../../assets/uploads/20250607_172552.jpg
