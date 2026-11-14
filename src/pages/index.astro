@@ -3,27 +3,29 @@ import Base from '../layouts/Base.astro';
 import PostCard from '../components/PostCard.astro';
 import Newsletter from '../components/Newsletter.astro';
 import { getPosts, REGIONS } from '../lib/posts';
-import settings from '../data/settings.json';
+import home from '../data/homepage.json';
 
 const posts = await getPosts();
 const featured = posts.find((p) => p.data.featured) ?? posts[0];
 const latest = posts.filter((p) => p !== featured).slice(0, 6);
 const count = (r: string) => posts.filter((p) => p.data.region === r).length;
+// All the words on the homepage come from src/data/homepage.json,
+// which you edit in the editor under Pages → Homepage.
 const blurbs: Record<string, string> = {
-  'south-africa': 'Karoo dorps, Drakensberg passes and the long way round the coast.',
-  africa: 'Border crossings, bush camps and neighbours worth the drive.',
-  world: 'The bigger trips — planned for, saved for, and worth every rand.',
+  'south-africa': home.regionBlurbs?.southAfrica,
+  africa: home.regionBlurbs?.africa,
+  world: home.regionBlurbs?.world,
 };
 ---
 
 <Base>
   <section class="container hero">
-    <p class="eyebrow">A South African travel journal</p>
-    <h1>Pack the padkos. <em>Bring the passport.</em></h1>
-    <p class="lede">{settings.tagline} Honest stories, real costs in rand, and the little things that make a trip easier at any age.</p>
+    {home.eyebrow && <p class="eyebrow">{home.eyebrow}</p>}
+    <h1>{home.headlineLine1} {home.headlineLine2 && <em>{home.headlineLine2}</em>}</h1>
+    {home.intro && <p class="lede">{home.intro}</p>}
     <div class="hero__actions">
-      <a class="btn btn--primary" href="/blog/">Read the latest stories</a>
-      <a class="btn btn--secondary" href="/newsletter/">Get the monthly postcard</a>
+      {home.primaryButton?.label && <a class="btn btn--primary" href={home.primaryButton?.link || '/blog/'}>{home.primaryButton?.label}</a>}
+      {home.secondaryButton?.label && <a class="btn btn--secondary" href={home.secondaryButton?.link || '/newsletter/'}>{home.secondaryButton?.label}</a>}
     </div>
   </section>
 
@@ -35,7 +37,7 @@ const blurbs: Record<string, string> = {
 
   <section class="container section">
     <div class="section-head">
-      <h2>Where to next?</h2>
+      <h2>{home.regionsHeading}</h2>
       <a href="/destinations/">All destinations →</a>
     </div>
     <div class="region-band">
@@ -51,7 +53,7 @@ const blurbs: Record<string, string> = {
 
   <section class="container section">
     <div class="section-head">
-      <h2>Latest from the road</h2>
+      <h2>{home.latestHeading}</h2>
       <a href="/blog/">See every story →</a>
     </div>
     <div class="grid">
