@@ -29,6 +29,11 @@ const {
   jsonLd = [],
 } = Astro.props;
 
+// Google shows roughly 155-160 characters, so trim long summaries neatly at a word.
+const trim = (text: string, max = 160) =>
+  text.length <= max ? text : text.slice(0, text.lastIndexOf(' ', max - 1)).replace(/[\s,.;:–—-]+$/, '') + '…';
+const metaDescription = trim(description);
+
 const fullTitle = title ? `${title} · ${settings.siteTitle}` : `${settings.siteTitle} — ${settings.tagline}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const og = await getImage({ src: image, width: 1200, height: 630, format: 'jpg', fit: 'cover' });
@@ -48,7 +53,7 @@ const beacon = settings.analytics.cloudflareBeaconToken;
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>{fullTitle}</title>
-<meta name="description" content={description} />
+<meta name="description" content={metaDescription} />
 <link rel="canonical" href={canonical} />
 {noindex && <meta name="robots" content="noindex" />}
 <meta name="author" content={settings.author.name} />
@@ -64,7 +69,7 @@ const beacon = settings.analytics.cloudflareBeaconToken;
 <meta property="og:site_name" content={settings.siteTitle} />
 <meta property="og:locale" content={settings.language.replace('-', '_')} />
 <meta property="og:title" content={title ?? settings.siteTitle} />
-<meta property="og:description" content={description} />
+<meta property="og:description" content={metaDescription} />
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={ogUrl} />
 <meta property="og:image:width" content="1200" />
@@ -76,7 +81,7 @@ const beacon = settings.analytics.cloudflareBeaconToken;
 <!-- X / Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title ?? settings.siteTitle} />
-<meta name="twitter:description" content={description} />
+<meta name="twitter:description" content={metaDescription} />
 <meta name="twitter:image" content={ogUrl} />
 
 <script type="application/ld+json" set:html={JSON.stringify([siteLd, ...jsonLd])} />

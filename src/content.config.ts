@@ -6,8 +6,10 @@ const posts = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/posts' }),
   schema: ({ image }) =>
     z.object({
-      title: z.string().max(110),
-      description: z.string().max(200),
+      // No hard length limits: a long title or summary should never stop the site
+      // from publishing. Search-engine snippets are trimmed in BaseHead.astro.
+      title: z.string(),
+      description: z.string(),
       date: z.coerce.date(),
       updated: z.coerce.date().optional(),
       cover: image(),
