@@ -46,5 +46,8 @@
     "message": "",
     "url": "",
     "buttonLabel": "Find out more"
+  },
+  "verification": {
+    "google": "<meta name=\"google-site-verification\" content=\"hUGQeIcwykfmrhO1U97MBV4aIzL5O4MW0IM4Zv_3QZE\" />"
   }
 }
