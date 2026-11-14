@@ -1,0 +1,296 @@
+---
+// The travel map. It is drawn fresh every time the site is built, from the
+// countries and map pins in each story — so a new story appears on the map
+// automatically. No map service, account or key is needed.
+import { geoNaturalEarth1, geoPath, geoInterpolate } from 'd3-geo';
+import { feature } from 'topojson-client';
+import world from 'world-atlas/countries-110m.json';
+import MapIcons from './MapIcons.astro';
+import settings from '../../data/settings.json';
+import { getPosts, countriesOf, slugify, type Post } from '../../lib/posts';
+import { findCountry, readPoint, distanceKm, COUNTRY_ICON, type CountryInfo } from '../../lib/geo';
+
+interface Props {
+  compact?: boolean; // smaller version for the homepage
+}
+const { compact = false } = Astro.props;
+
+// ---------- 1. Gather the trips ----------
+const posts = (await getPosts()).slice().sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+const savedHome = readPoint((settings as { mapHome?: unknown }).mapHome);
+const home = { ...(savedHome ?? { lat: -29.86, lng: 31.02 }), name: settings.author.location || 'Home' };
+
+type Visit = { info: CountryInfo; typed: string; stories: { title: string; url: string }[] };
+const visits = new Map<string, Visit>();
+const unknown = new Set<string>();
+const legs: { to: { lat: number; lng: number }; title: string; url: string; cca3: string }[] = [];
+const places: { name: string; lat: number; lng: number; title: string; url: string }[] = [];
+
+for (const post of posts) {
+  const url = `/blog/${post.id}/`;
+  let firstStop: { lat: number; lng: number; cca3: string } | undefined;
+  for (const name of countriesOf(post)) {
+    const info = findCountry(name);
+    if (!info) { unknown.add(name); continue; }
+    const v = visits.get(info.cca3) ?? { info, typed: name, stories: [] };
+    if (!v.stories.some((s) => s.url === url)) v.stories.push({ title: post.data.title, url });
+    visits.set(info.cca3, v);
+    firstStop ??= { lat: info.lat, lng: info.lng, cca3: info.cca3 };
+  }
+  for (const p of (post.data as Post['data'] & { places?: { name: string; location?: unknown }[] }).places ?? []) {
+    const pt = readPoint(p.location);
+    if (pt) places.push({ name: p.name, ...pt, title: post.data.title, url });
+  }
+  if (firstStop) legs.push({ to: firstStop, title: post.data.title, url, cca3: firstStop.cca3 });
+}
+if (unknown.size) console.warn(`[travel map] Couldn't find these countries — check the spelling: ${[...unknown].join(', ')}`);
+
+// ---------- 2. Draw the world ----------
+const W = 1000;
+const all = feature(world as never, (world as any).objects.countries) as unknown as GeoJSON.FeatureCollection;
+const land = { ...all, features: all.features.filter((f) => f.id !== '010') }; // leave out Antarctica
+const projection = geoNaturalEarth1().fitWidth(W, land);
+const path = geoPath(projection).digits(1);
+const [[, y0], [, y1]] = path.bounds(land);
+projection.translate([projection.translate()[0], projection.translate()[1] - y0]);
+const H = Math.round(y1 - y0);
+const visitedCodes = new Set([...visits.values()].map((v) => v.info.ccn3));
+const countries = land.features.map((f) => ({ d: path(f) ?? '', visited: visitedCodes.has(String(f.id)), name: (f.properties as { name: string }).name }));
+
+const xy = (p: { lat: number; lng: number }) => projection([p.lng, p.lat]) as [number, number];
+const r1 = (n: number) => Math.round(n * 10) / 10;
+
+// ---------- 3. Flight paths (curved great-circle lines from home) ----------
+const flights = legs
+  .filter((l) => distanceKm(home, l.to) > 250)
+  .map((l) => {
+    const interp = geoInterpolate([home.lng, home.lat], [l.to.lng, l.to.lat]);
+    let d = '';
+    let prev: [number, number] | undefined;
+    for (let i = 0; i <= 48; i++) {
+      const [x, y] = projection(interp(i / 48)) as [number, number];
+      d += `${!prev || Math.abs(x - prev[0]) > W / 2 ? 'M' : 'L'}${r1(x)} ${r1(y)}`;
+      prev = [x, y];
+    }
+    return { d, ...l };
+  });
+
+// ---------- 4. Pins ----------
+const pins = [...visits.values()].map((v) => {
+  const [x, y] = xy(v.info);
+  const n = v.stories.length;
+  return {
+    x: r1(x), y: r1(y), code: v.info.cca3, name: v.info.name, n,
+    icon: COUNTRY_ICON[v.info.cca3] ?? 'camera',
+    href: `/destinations/${slugify(v.typed)}/`, // same address as the Destinations page
+    tip: `${v.info.name} · ${n} ${n === 1 ? 'story' : 'stories'}`,
+  };
+});
+const [hx, hy] = xy(home);
+const placeDots = places.map((p) => { const [x, y] = xy(p); return { ...p, x: r1(x), y: r1(y) }; });
+
+// ---------- 5. Zoom views ----------
+const boxView = (lng0: number, lat0: number, lng1: number, lat1: number) => {
+  const pts: [number, number][] = [];
+  for (let i = 0; i <= 8; i++) {
+    const t = i / 8;
+    pts.push(xy({ lng: lng0 + (lng1 - lng0) * t, lat: lat0 }), xy({ lng: lng0 + (lng1 - lng0) * t, lat: lat1 }));
+    pts.push(xy({ lng: lng0, lat: lat0 + (lat1 - lat0) * t }), xy({ lng: lng1, lat: lat0 + (lat1 - lat0) * t }));
+  }
+  return fit(pts, 10);
+};
+function fit(pts: [number, number][], pad: number) {
+  let [ax, ay, bx, by] = [Infinity, Infinity, -Infinity, -Infinity];
+  for (const [x, y] of pts) { ax = Math.min(ax, x); ay = Math.min(ay, y); bx = Math.max(bx, x); by = Math.max(by, y); }
+  let w = Math.max(bx - ax + pad * 2, 220), h = Math.max(by - ay + pad * 2, 220 * (H / W));
+  // keep the map's shape
+  if (w / h > W / H) h = w * (H / W); else w = h * (W / H);
+  const cx = (ax + bx) / 2, cy = (ay + by) / 2;
+  let x = cx - w / 2, y = cy - h / 2;
+  w = Math.min(w, W); h = Math.min(h, H);
+  x = Math.max(0, Math.min(x, W - w)); y = Math.max(0, Math.min(y, H - h));
+  return [r1(x), r1(y), r1(w), r1(h)].join(' ');
+}
+const allPoints: [number, number][] = [[hx, hy], ...pins.map((p) => [p.x, p.y] as [number, number]), ...placeDots.map((p) => [p.x, p.y] as [number, number])];
+const regions = [{ id: 'trips', label: 'All my trips', view: fit(allPoints, 70) }, { id: 'world', label: 'World', view: `0 0 ${W} ${H}` }];
+const REGION_BOXES: { id: string; label: string; box: [number, number, number, number]; continent?: string }[] = [
+  { id: 'southern-africa', label: 'Southern Africa', box: [10, -36, 42, -8] },
+  { id: 'africa', label: 'Africa', box: [-20, -36, 55, 38], continent: 'Africa' },
+  { id: 'europe', label: 'Europe', box: [-12, 34, 42, 62], continent: 'Europe' },
+  { id: 'asia', label: 'Asia', box: [40, -10, 150, 55], continent: 'Asia' },
+  { id: 'americas', label: 'The Americas', box: [-170, -56, -30, 72], continent: 'Americas' },
+  { id: 'oceania', label: 'Australia & islands', box: [110, -48, 180, 0], continent: 'Oceania' },
+];
+const continents = new Set([...visits.values()].map((v) => v.info.region));
+for (const r of REGION_BOXES) {
+  if (r.id === 'southern-africa' || continents.has(r.continent!)) regions.push({ id: r.id, label: r.label, view: boxView(...r.box) });
+}
+
+// ---------- 6. Numbers for the little stats row ----------
+const furthest = legs.reduce((m, l) => Math.max(m, distanceKm(home, l.to)), 0);
+const stats = [
+  { value: visits.size, label: visits.size === 1 ? 'country' : 'countries' },
+  { value: continents.size, label: continents.size === 1 ? 'continent' : 'continents' },
+  { value: posts.length, label: posts.length === 1 ? 'story' : 'stories' },
+  { value: `${(Math.round(furthest / 10) * 10).toLocaleString('en-ZA')} km`, label: 'furthest from home' },
+];
+const listed = [...visits.values()].sort((a, b) => a.info.name.localeCompare(b.info.name));
+const startView = regions[0].view;
+---
+
+<section class:list={['travel-map', { 'travel-map--compact': compact }]} data-travel-map data-w={W} data-h={H}>
+  <MapIcons />
+  {!compact && (
+    <ul class="map-stats" role="list">
+      {stats.map((s) => <li><strong>{s.value}</strong> {s.label}</li>)}
+    </ul>
+  )}
+
+  <div class="map-views" role="group" aria-label="Zoom the map">
+    {regions.map((r, i) => (
+      <button type="button" class="map-view-btn" data-view={r.view} aria-pressed={i === 0 ? 'true' : 'false'}>{r.label}</button>
+    ))}
+  </div>
+
+  <div class="map-frame">
+    <svg class="map-svg" viewBox={startView} role="img" aria-labelledby="map-title map-desc" preserveAspectRatio="xMidYMid meet">
+      <title id="map-title">Map of places visited</title>
+      <desc id="map-desc">{`${visits.size} countries visited: ${listed.map((v) => v.info.name).join(', ')}.`}</desc>
+      <rect class="map-sea" x="-500" y="-500" width={W + 1000} height={H + 1000} />
+      <g class="map-land">
+        {countries.map((c) => <path d={c.d} class:list={{ visited: c.visited }}><title>{c.name}</title></path>)}
+      </g>
+      <g class="map-flights">
+        {flights.map((f, i) => <path d={f.d} class="map-flight" data-leg={i} data-to={f.cca3} data-title={f.title} />)}
+      </g>
+      <g class="map-places">
+        {placeDots.map((p) => (
+          <a href={p.url} class="map-place" data-x={p.x} data-y={p.y} data-tip={`${p.name} — ${p.title}`} aria-label={`${p.name}, from the story ${p.title}`} transform={`translate(${p.x} ${p.y})`}>
+            <circle r="5" />
+          </a>
+        ))}
+      </g>
+      <g class="map-pins">
+        <g class="map-pin map-pin--home" data-x={r1(hx)} data-y={r1(hy)} data-tip={`Home · ${home.name}`} transform={`translate(${r1(hx)} ${r1(hy)})`} tabindex="0" role="img" aria-label={`Home: ${home.name}`}>
+          <g class="pin-body"><circle r="15" /><use href="#ic-suitcase" x="-10" y="-10" width="20" height="20" class="pin-icon pin-icon--bob" /></g>
+        </g>
+        {pins.map((p, i) => (
+          <a href={p.href} class="map-pin" data-code={p.code} data-x={p.x} data-y={p.y} data-tip={p.tip} aria-label={p.tip} transform={`translate(${p.x} ${p.y})`} style={`--i:${i}`}>
+            <g class="pin-body">
+              <circle r="15" />
+              <use href={`#ic-${p.icon}`} x="-10" y="-10" width="20" height="20" class="pin-icon" />
+              {p.n > 1 && <g class="pin-count" transform="translate(12 -12)"><circle r="8" /><text text-anchor="middle" dy="3.5">{p.n}</text></g>}
+            </g>
+          </a>
+        ))}
+      </g>
+      <g class="map-plane" aria-hidden="true" opacity="0"><use href="#ic-plane" x="-13" y="-13" width="26" height="26" /></g>
+    </svg>
+    <div class="map-tip" role="status" aria-live="polite" hidden></div>
+    <p class="map-now" aria-hidden="true"></p>
+  </div>
+
+  {!compact && (
+    <details class="map-list">
+      <summary>List of every country on the map</summary>
+      <ul role="list">
+        {listed.map((v) => (
+          <li><strong>{v.info.name}</strong>: {v.stories.map((s, i) => <>{i > 0 && ', '}<a href={s.url}>{s.title}</a></>)}</li>
+        ))}
+      </ul>
+    </details>
+  )}
+</section>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll<HTMLElement>('[data-travel-map]').forEach((root) => {
+    const svg = root.querySelector<SVGSVGElement>('.map-svg')!;
+    const W = Number(root.dataset.w);
+    const tip = root.querySelector<HTMLElement>('.map-tip')!;
+    const now = root.querySelector<HTMLElement>('.map-now')!;
+    const scaled = [...root.querySelectorAll<SVGGElement>('[data-x]')];
+    let view = svg.getAttribute('viewBox')!.split(' ').map(Number);
+
+    // Keep pins the same size on screen whatever the zoom.
+    const setView = (v: number[]) => {
+      view = v;
+      svg.setAttribute('viewBox', v.map((n) => n.toFixed(1)).join(' '));
+      const s = Math.max(v[2] / W, 0.18) * (root.classList.contains('travel-map--compact') ? 1.25 : 1.1);
+      scaled.forEach((el) => el.setAttribute('transform', `translate(${el.dataset.x} ${el.dataset.y}) scale(${s.toFixed(3)})`));
+      root.style.setProperty('--k', String(s));
+    };
+    setView(view);
+
+    // Zoom buttons glide between views.
+    let anim = 0;
+    root.querySelectorAll<HTMLButtonElement>('.map-view-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        root.querySelectorAll('.map-view-btn').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+        const from = view.slice(), to = btn.dataset.view!.split(' ').map(Number);
+        cancelAnimationFrame(anim);
+        if (reduce) return setView(to);
+        const t0 = performance.now();
+        const step = (t: number) => {
+          const k = Math.min(1, (t - t0) / 700), e = k < 0.5 ? 2 * k * k : 1 - (-2 * k + 2) ** 2 / 2;
+          setView(from.map((f, i) => f + (to[i] - f) * e));
+          if (k < 1) anim = requestAnimationFrame(step);
+        };
+        anim = requestAnimationFrame(step);
+      });
+    });
+
+    // Name labels on hover / keyboard focus.
+    const show = (el: Element) => {
+      tip.textContent = (el as HTMLElement).dataset.tip || '';
+      const a = el.getBoundingClientRect(), b = root.querySelector('.map-frame')!.getBoundingClientRect();
+      tip.style.left = `${a.left + a.width / 2 - b.left}px`;
+      tip.style.top = `${a.top - b.top}px`;
+      tip.hidden = false;
+    };
+    root.querySelectorAll('[data-tip]').forEach((el) => {
+      el.addEventListener('mouseenter', () => show(el));
+      el.addEventListener('focus', () => show(el));
+      el.addEventListener('mouseleave', () => (tip.hidden = true));
+      el.addEventListener('blur', () => (tip.hidden = true));
+    });
+
+    // The little plane flies the trips in order, and each country's picture pops when it lands.
+    const legs = [...root.querySelectorAll<SVGPathElement>('.map-flight')];
+    const plane = root.querySelector<SVGGElement>('.map-plane')!;
+    if (reduce || !legs.length) return;
+    let visible = false, leg = 0, t0 = 0, running = false, landed = false;
+    const DURATION = 2600, PAUSE = 900;
+    const tick = (t: number) => {
+      if (!visible) { running = false; return; }
+      const path = legs[leg];
+      const len = path.getTotalLength();
+      const k = Math.min(1, (t - t0) / DURATION);
+      const e = 1 - (1 - k) ** 2.2; // slows down to land
+      const p = path.getPointAtLength(len * e), q = path.getPointAtLength(Math.min(len, len * e + 1));
+      const angle = (Math.atan2(q.y - p.y, q.x - p.x) * 180) / Math.PI;
+      const s = Number(getComputedStyle(root).getPropertyValue('--k')) || 1;
+      plane.setAttribute('transform', `translate(${p.x.toFixed(1)} ${p.y.toFixed(1)}) rotate(${angle.toFixed(0)}) scale(${(s * (0.8 + Math.sin(k * Math.PI) * 0.35)).toFixed(3)})`);
+      plane.setAttribute('opacity', k > 0.97 ? '0' : '1');
+      path.classList.add('is-active');
+      if (now.dataset.leg !== String(leg)) { now.textContent = `Flying to: ${path.dataset.title}`; now.dataset.leg = String(leg); }
+      if (k >= 1 && !landed) {
+        landed = true;
+        const pin = root.querySelector<SVGGElement>(`.map-pin[data-code="${path.dataset.to}"]`);
+        pin?.classList.remove('pop'); void pin?.getBoundingClientRect(); pin?.classList.add('pop');
+      }
+      if (k >= 1 && t - t0 > DURATION + PAUSE) {
+        path.classList.remove('is-active');
+        leg = (leg + 1) % legs.length;
+        t0 = t;
+        landed = false;
+      }
+      requestAnimationFrame(tick);
+    };
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible && !running) { running = true; t0 = performance.now(); requestAnimationFrame(tick); }
+    }).observe(svg);
+  });
+</script>

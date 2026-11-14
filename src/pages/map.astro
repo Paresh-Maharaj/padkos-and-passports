@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import TravelMap from '../components/map/TravelMap.astro';
+---
+<Base title="Travel map" description="Every country and place from the stories on one map: tap a pin to read about it.">
+  <section class="container section" style="padding-bottom:24px">
+    <p class="eyebrow">Where we've been</p>
+    <h1>The travel map</h1>
+    <p class="lede" style="margin-top:12px">Every pin is a country from the stories. Tap one to read about it, or watch the little plane fly the trips in order. The map adds new places by itself whenever a story is published.</p>
+  </section>
+  <section class="container">
+    <TravelMap />
+    <p class="article-meta" style="margin-top:16px;font-size:14px">Map outlines from Natural Earth. Country positions from the world-countries data set (ODbL).</p>
+  </section>
+</Base>

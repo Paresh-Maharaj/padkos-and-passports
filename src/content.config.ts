@@ -27,6 +27,11 @@ const posts = defineCollection({
       alsoVisited: z.preprocess((v) => (Array.isArray(v) ? v.filter((c) => typeof c === 'string' && c.trim()) : []), z.array(z.string())),
       // When the trip happened, in your own words, e.g. "7–10 August 2026" (optional).
       travelDates: z.string().optional(),
+      // Exact spots to pin on the travel map (optional). The editor's map picker saves each one.
+      places: z.preprocess(
+        (v) => (Array.isArray(v) ? v.filter((p) => p && typeof p === 'object' && (p as { name?: unknown }).name) : []),
+        z.array(z.object({ name: z.string(), location: z.unknown().optional() })),
+      ),
       region: z.enum(['south-africa', 'africa', 'world']),
       tripType: z.enum(['solo', 'couple', 'family']),
       tags: z.array(z.string()).default([]),

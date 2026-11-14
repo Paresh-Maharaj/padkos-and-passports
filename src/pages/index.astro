@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import PostCard from '../components/PostCard.astro';
 import Newsletter from '../components/Newsletter.astro';
+import TravelMap from '../components/map/TravelMap.astro';
 import { getPosts, REGIONS } from '../lib/posts';
 import home from '../data/homepage.json';
 
@@ -49,6 +50,14 @@ const blurbs: Record<string, string> = {
         </a>
       ))}
     </div>
+  </section>
+
+  <section class="container section" style="padding-top:0">
+    <div class="section-head">
+      <h2>{home.mapHeading ?? 'Where we\'ve been'}</h2>
+      <a href="/map/">Open the full map →</a>
+    </div>
+    <TravelMap compact />
   </section>
 
   <section class="container section">
