@@ -8,19 +8,21 @@ updated: ""
 cover: ../../assets/uploads/20260627_135220-1-.jpg
 coverAlt: "Picture from the cave itself and our journey to the cave "
 country: South Africa
+travelDates: June 2026
 region: south-africa
 tripType: family
 tags:
   - Drakensberg
-  - with extended family
+  - Extended family
   - KwaZulu-Natal
+  - Hiking
 featured: false
 sponsored: false
 draft: false
 ---
 > Four (4) memorable and cold days with family including my 80 year old mom.
 
-## Nearby hikes & attractions
+## Hiking in the Drakensberg
 
 A short drive away through the Gooderson resort provided us a 3 odd hour trail at Garden Castle managed by KZN Ezemvelo.  The scenic hike cost R80 pp with river crossings and waterfalls that lead to an overnight cave.  The hike is moderate to difficult but the youngsters did the hike in under 2 hours. Start early and get clear directions as the area is not clearly marked.   The Park Ranger unfortunately had no maps to provide us. 
 
