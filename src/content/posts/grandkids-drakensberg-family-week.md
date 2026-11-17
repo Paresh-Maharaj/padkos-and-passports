@@ -1,11 +1,11 @@
 ---
-title: The 2026 Met meets the West Coast of Cape Town
+title: The 2026 Met Meets the West Coast of Cape Town
 description: "A couple’s trip to the 164th running of the Cape Town Met
   horse-racing at Kenilworth on 31st January 2026 and holidays in the West
   Coast. "
 date: 2026-01-27
 cover: ../../assets/uploads/20260131_161600-1-.jpg
-coverAlt: "The 2026 Met races "
+coverAlt: "The 2026 Met Races "
 country: South Africa
 places:
   - name: Cape Town
@@ -26,7 +26,7 @@ gallery:
     alt: Mandela's face against Table Mountain
 draft: false
 ---
-**Day 1.**   After disembarking at the Cape Town International Airport, we collected the hired vehicle and visited my wife’s nephew, niece and kid Sonia in Milnerton. After brunch we proceeded to the picturesque **Langebaan just** over an hour from Cape Town which was going to be our base for the next 3 nights.  From Langebaan we drifted at leisure to the following towns.
+After disembarking at the Cape Town International Airport, we collected the hired vehicle and visited my wife’s nephew, niece and kid Sonia in Milnerton. After brunch we proceeded to the picturesque **Langebaan just** over an hour from Cape Town which was going to be our base for the next 3 nights.  From Langebaan we drifted at leisure to the following towns.
 
 **Langebaan & the lagoon**
 
