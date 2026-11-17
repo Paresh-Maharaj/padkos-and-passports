@@ -1,6 +1,6 @@
 ---
-title: "A spiritual and cultural journey through Northern India: 13 days of
-  sheer wonder"
+title: "A Spiritual and Cultural Journey Through Northern India: 13 days of
+  Sheer Wonder"
 description: >
   My wife and I accompanied my sister in law's family on this spiritual journey
   from the sacred ghats of the Ganges to the timeless marble of the Taj
@@ -8,10 +8,11 @@ description: >
   law  Nadira undertook the journey to perform rituals in Gaya for her late
   husband Sudesh who had passed away in 2023.
 
+
   Our 13-day journey across Northern India blended deep spiritual heritage with rich royal history.
 date: 2025-09-27
 cover: ../../assets/uploads/whatsapp-image-2026-11-15-at-16.52.55.jpeg
-coverAlt: "India Gate "
+coverAlt: "The Famous India Gate "
 country: India
 alsoVisited: []
 places:
@@ -20,8 +21,12 @@ places:
 travelDates: 27th September to 9th October 2025
 region: world
 tripType: family
-tags: []
-featured: false
+tags:
+  - India
+  - Temples
+  - Culture
+  - Cuisine
+featured: true
 sponsored: false
 gallery:
   - image: ../../assets/uploads/whatsapp-image-2026-11-15-at-17.09.56.jpeg
