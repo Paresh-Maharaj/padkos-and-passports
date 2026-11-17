@@ -2,6 +2,9 @@
 import Base from '../../layouts/Base.astro';
 import PostCard from '../../components/PostCard.astro';
 import { getPosts, TRIP_TYPES, type Post } from '../../lib/posts';
+// The words on these pages come from src/data/trips.json,
+// which you edit in the editor under Pages → Trip style pages.
+import trips from '../../data/trips.json';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -12,20 +15,19 @@ export async function getStaticPaths() {
 }
 interface Props { type: keyof typeof TRIP_TYPES; posts: Post[] }
 const { type, posts } = Astro.props;
-const intro = {
-  solo: 'Travelling alone after retirement: safety, single supplements, meeting people and the quiet joy of setting your own pace.',
-  couple: 'Trips with my travel buddy, my wife: slower days, good food, comfortable stays and the places we have always meant to see together.',
-  family: 'Holidays with the children and grandchildren: kid-friendly stops, multi-generation stays and keeping everyone fed and happy.',
-}[type];
+const page = (trips as Record<string, { title?: string; intro?: string } | string | undefined>)[type] as { title?: string; intro?: string } | undefined;
+const title = page?.title || TRIP_TYPES[type];
+const intro = page?.intro || '';
+const empty = (trips as { emptyMessage?: string }).emptyMessage || 'Stories coming soon.';
 ---
 
-<Base title={TRIP_TYPES[type]} description={intro}>
+<Base title={title} description={intro || undefined}>
   <section class="container section">
     <p class="eyebrow">Trip style</p>
-    <h1>{TRIP_TYPES[type]}</h1>
-    <p class="lede" style="margin-top:12px">{intro}</p>
+    <h1>{title}</h1>
+    {intro && <p class="lede" style="margin-top:12px">{intro}</p>}
   </section>
   <section class="container">
-    {posts.length ? <div class="grid">{posts.map((p) => <PostCard post={p} />)}</div> : <p class="lede">Stories coming soon.</p>}
+    {posts.length ? <div class="grid">{posts.map((p) => <PostCard post={p} />)}</div> : <p class="lede">{empty}</p>}
   </section>
 </Base>

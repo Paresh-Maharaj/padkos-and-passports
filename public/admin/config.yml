@@ -145,6 +145,31 @@ collections:
           - { label: Heading above the latest stories, name: latestHeading, widget: string }
           - { label: Heading above the travel map, name: mapHeading, widget: string, required: false }
 
+      - label: Trip style pages (Solo, Couple, Family)
+        name: trips
+        file: src/data/trips.json
+        description: The heading and introduction at the top of the Solo, Couple and Family pages.
+        fields:
+          - label: Solo page
+            name: solo
+            widget: object
+            fields:
+              - { label: Page heading, name: title, widget: string }
+              - { label: Introduction, name: intro, widget: text, required: false }
+          - label: Couple page
+            name: couple
+            widget: object
+            fields:
+              - { label: Page heading, name: title, widget: string }
+              - { label: Introduction, name: intro, widget: text, required: false }
+          - label: Family page
+            name: family
+            widget: object
+            fields:
+              - { label: Page heading, name: title, widget: string }
+              - { label: Introduction, name: intro, widget: text, required: false }
+          - { label: Message when a page has no stories yet, name: emptyMessage, widget: string, required: false }
+
   # ───────────── Site settings ─────────────
   - name: settings
     label: Site settings

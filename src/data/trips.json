@@ -1,0 +1,15 @@
+{
+  "solo": {
+    "title": "Solo travel",
+    "intro": "Travelling alone after retirement: safety, single supplements, meeting people and the quiet joy of setting your own pace."
+  },
+  "couple": {
+    "title": "Travelling as a couple",
+    "intro": "Trips with my travel buddy, my wife: slower days, good food, comfortable stays and the places we have always meant to see together."
+  },
+  "family": {
+    "title": "Family travel",
+    "intro": "Holidays with the children and grandchildren: kid-friendly stops, multi-generation stays and keeping everyone fed and happy."
+  },
+  "emptyMessage": "Stories coming soon."
+}
