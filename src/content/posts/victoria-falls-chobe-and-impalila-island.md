@@ -1,5 +1,5 @@
 ---
-title: From Thundering Waters & Nature Reserves to the confluence of the Zambezi
+title: From Thundering Waters & Nature Reserves to the Confluence of the Zambezi
   & Chobe Rivers in Namibia
 description: A family journey from the 7th to the 10th of August 2026 to one of
   the largest waterfalls, a jeep ride and river float alongside hundreds of
@@ -7,7 +7,7 @@ description: A family journey from the 7th to the 10th of August 2026 to one of
   took us through the border posts of Zimbabwe, Zambia, Botswana, and Namibia.
 date: 2026-09-12
 cover: ../../assets/uploads/20260808_112233.jpg
-coverAlt: "Falls from Zimbabwe side "
+coverAlt: "Victoria Falls from Zimbabwe side "
 country: Zimbabwe
 alsoVisited:
   - Botswana
