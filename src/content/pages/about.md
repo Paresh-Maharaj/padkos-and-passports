@@ -4,7 +4,7 @@ description: Who's behind Padkos & Passports, and why I travel the way I do.
 ---
 Hello, and welcome. I'm a South African with a full tank, bottles of whisky and a list of places I always said I'd see "one day". One day turned out to be now.
 
-Some trips I take **solo** — just me, and whatever the road brings. Others are **family affairs**, with children or adults now still asking "are we there yet?".
+Some trips I take **solo**, just me, and whatever the road brings. Others are **family affairs**, with children or adults now still asking "are we there yet?".
 
 ## What you'll find here
 
