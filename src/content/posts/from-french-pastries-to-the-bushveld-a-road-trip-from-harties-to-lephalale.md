@@ -5,12 +5,13 @@ description: >
   a car windscreen. In the span of a single day, you can visit three Provinces,
   trade the misty emerald peaks of Magaliesberg for a slice of Paris, then dip
   into steaming mineral springs, and end your journey beneath the vast skies of
-  the Limpopo bushveld.
+  the Limpopo bushveld. 
+
 
   If you are craving a road trip that packs scenic views, and wild bushveld charm into one route, this north-bound adventure from Hartbeespoort dam affectionately known to the locals as "Harties” to Lephalale is an experience.
 date: 2026-08-10
 cover: ../../assets/uploads/whatsapp-image-2026-11-16-at-20.58.27-1-.jpeg
-coverAlt: "Little Paris "
+coverAlt: Eiffel Tower...in South Africa
 country: South Africa
 alsoVisited: []
 places:
@@ -19,8 +20,12 @@ places:
 travelDates: August 2026
 region: south-africa
 tripType: couple
-tags: []
-featured: false
+tags:
+  - Pastry
+  - Coffee
+  - Family
+  - Food
+featured: true
 sponsored: false
 gallery:
   - image: ../../assets/uploads/20260811_163850.jpg
