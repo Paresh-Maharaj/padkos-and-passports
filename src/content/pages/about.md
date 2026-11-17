@@ -8,9 +8,9 @@ Some trips I take **solo**, just me, and whatever the road brings. Others are **
 
 ## What you'll find here
 
-* **Honest write-ups** of where I stayed, ate and wandered — the good and the not-so-good.
-* **Real costs in rand**, so you can plan and budget with confidence.
-* **Practical tips for travelling at any age** — comfortable shoes, sensible insurance and the best padkos or snacks for a long drive.
+* **Honest write-ups** of where I stayed, ate and wandered: the good and the not-so-good.
+* **Costs in rand**, so you can plan and budget with confidence.
+* **Practical tips for travelling at any age**: comfortable shoes, sensible insurance and the best padkos or snacks for a long drive.
 
 ## Get in touch
 
