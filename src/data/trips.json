@@ -1,7 +1,7 @@
 {
   "solo": {
     "title": "Solo travel",
-    "intro": "Travelling alone after retirement: safety, single supplements, meeting people and the quiet joy of setting your own pace."
+    "intro": "Travelling alone: exploring safely, meeting people and the quiet joy of setting your own pace."
   },
   "couple": {
     "title": "Travelling as a couple",
@@ -9,7 +9,7 @@
   },
   "family": {
     "title": "Family travel",
-    "intro": "Holidays with the children and grandchildren: kid-friendly stops, multi-generation stays and keeping everyone fed and happy."
+    "intro": "Holidays with the children and extended family: kid-friendly stops, multi-generation stays and keeping everyone fed and happy."
   },
   "emptyMessage": "Stories coming soon."
 }
